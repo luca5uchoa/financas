@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Despesas</title>
+</head>
+<body>
+    <h1>Lista de Despesas</h1>
+    <ul>
+        {% for despesa in despesas %}
+            <li>{{ despesa.descricao }} - R$ {{ despesa.valor }} - {{ despesa.data }}</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="{% url 'cadastrar_despesa' %}">Adicionar Despesa</a> |
+        <a href="{% url 'home' %}">Voltar à Página Inicial</a>
+    </p>
+</body>
+</html>

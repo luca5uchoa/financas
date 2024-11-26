@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Receitas</title>
+</head>
+<body>
+    <h1>Lista de Receitas</h1>
+    <ul>
+        {% for receita in receitas %}
+            <li>{{ receita.descricao }} - R$ {{ receita.valor }} - {{ receita.data }}</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="{% url 'cadastrar_receita' %}">Adicionar Receita</a> |
+        <a href="{% url 'home' %}">Voltar à Página Inicial</a>
+    </p>
+</body>
+</html>

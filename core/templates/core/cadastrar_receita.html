@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Receita</title>
+</head>
+<body>
+    <h1>Cadastrar Receita</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+        <a href="{% url 'home' %}" style="text-decoration:none; color:white;">
+            <button type="button" style="background-color:red;">Cancelar</button>
+        </a>
+    </form>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+</head>
+<body>
+    <h1>Bem-vindo, {{ user.username }}!</h1>
+
+    <ul>
+        <li><a href="{% url 'listar_receitas' %}">Listar Receitas</a></li>
+        <li><a href="{% url 'listar_despesas' %}">Listar Despesas</a></li>
+        <li><a href="{% url 'cadastrar_receita' %}">Cadastrar Receita</a></li>
+        <li><a href="{% url 'cadastrar_despesa' %}">Cadastrar Despesa</a></li>
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Sair e trocar de usuário</button>
+        </form>
+        
+    </ul>
+</body>
+</html>
