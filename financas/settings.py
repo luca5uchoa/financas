@@ -22,6 +22,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Redirecionamento após login e logout
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'  # Para redirecionar para a página inicial após login
 LOGOUT_REDIRECT_URL = '/login/'  # Redirecionar para a página de login após o logout
 

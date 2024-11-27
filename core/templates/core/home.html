@@ -1,23 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
+    <!-- Importação da fonte Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <!-- Tags estáticas precisam ser carregadas -->
+    {% load static %}
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
 </head>
 <body>
-    <h1>Bem-vindo, {{ user.username }}!</h1>
+    <div class="container">
+        <header>
+            <div class="header-container">
+                <h1>Bem-vindo, {{ user.username }}!</h1>
+                <form action="{% url 'logout' %}" method="post" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button"><i class="fas fa-sign-out-alt"></i> Sair</button>
+                </form>
+            </div>
+        </header>
+        <div class="summary">
+            <!-- Resumo das Receitas -->
+            <a href="{% url 'listar_receitas' %}" class="box">
+                <i class="fas fa-coins"></i>
+                <p>Receitas do Mês</p>
+                <p class="amount">R$ {{ receitas_mes|floatformat:2 }}</p>
+            </a>
+            <!-- Resumo das Despesas -->
+            <a href="{% url 'listar_despesas' %}" class="box">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Despesas do Mês</p>
+                <p class="amount">R$ {{ despesas_mes|floatformat:2 }}</p>
+            </a>
+        </div>
+        <!-- Gráfico de Pizza -->
+        <div class="chart-container">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
 
-    <ul>
-        <li><a href="{% url 'listar_receitas' %}">Listar Receitas</a></li>
-        <li><a href="{% url 'listar_despesas' %}">Listar Despesas</a></li>
-        <li><a href="{% url 'cadastrar_receita' %}">Cadastrar Receita</a></li>
-        <li><a href="{% url 'cadastrar_despesa' %}">Cadastrar Despesa</a></li>
-        <form action="{% url 'logout' %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit">Sair e trocar de usuário</button>
-        </form>
-        
-    </ul>
+    <!-- Importação do Chart.js para o gráfico -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Configuração do gráfico de pizza
+        const ctx = document.getElementById('pieChart').getContext('2d');
+        const pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Receitas', 'Despesas'],
+                datasets: [{
+                    label: 'Resumo Financeiro',
+                    data: [{{ receitas_mes }}, {{ despesas_mes }}],
+                    backgroundColor: ['#024CAA', '#EC8305'],
+                    borderColor: ['#091057', '#DBD3D3'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#091057',
+                            font: {
+                                family: 'Roboto'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <footer>
+        <div class="footer-content">
+            <!-- Texto do Rodapé -->
+            <div class="footer-text">
+                <p>Finanças Pessoais &copy; 2024</p>
+            </div>
+    
+            <!-- Links com os ícones de redes sociais -->
+            <ul class="footer-links">
+                <li><a href="https://www.instagram.com/seu_usuario" target="_blank">
+                    <i class="fab fa-instagram"></i> 
+                </a></li>
+                <li><a href="https://twitter.com/seu_usuario" target="_blank">
+                    <i class="fab fa-twitter"></i> 
+                </a></li>
+                <li><a href="https://www.google.com">Politicas de privacidade</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

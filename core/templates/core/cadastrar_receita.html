@@ -1,19 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Receita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
 </head>
 <body>
-    <h1>Cadastrar Receita</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Salvar</button>
-        <a href="{% url 'home' %}" style="text-decoration:none; color:white;">
-            <button type="button" style="background-color:red;">Cancelar</button>
-        </a>
-    </form>
+    <div class="container">
+        <header>
+            <h1>Cadastrar Receita</h1>
+        </header>
+
+        <!-- Formulário para Cadastrar Receita -->
+        <form method="post" class="form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_descricao">Descrição</label>
+                {{ form.descricao }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_valor">Valor</label>
+                {{ form.valor }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_data">Data</label>
+                <input type="date" id="id_data" name="data" required class="input">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">Salvar</button>
+                <a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+        <footer>
+            <div class="footer-content">
+                <!-- Texto do Rodapé -->
+                <div class="footer-text">
+                    <p>Finanças Pessoais &copy; 2024</p>
+                </div>
+        
+                <!-- Links com os ícones de redes sociais -->
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/seu_usuario" target="_blank">
+                        <i class="fab fa-instagram"></i> 
+                    </a></li>
+                    <li><a href="https://twitter.com/seu_usuario" target="_blank">
+                        <i class="fab fa-twitter"></i> 
+                    </a></li>
+                    <li><a href="https://www.google.com">Politicas de privacidade</a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>

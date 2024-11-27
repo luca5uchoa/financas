@@ -1,20 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Despesas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
 </head>
 <body>
-    <h1>Lista de Despesas</h1>
-    <ul>
-        {% for despesa in despesas %}
-            <li>{{ despesa.descricao }} - R$ {{ despesa.valor }} - {{ despesa.data }}</li>
-        {% endfor %}
-    </ul>
-    <p>
-        <a href="{% url 'cadastrar_despesa' %}">Adicionar Despesa</a> |
-        <a href="{% url 'home' %}">Voltar à Página Inicial</a>
-    </p>
+    <div class="container">
+        <header>
+            <h1>Lista de Despesas</h1>
+        </header>
+
+        <!-- Tabela de Despesas -->
+        <div class="table-container">
+            <table class="despesas-table">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for despesa in despesas %}
+                        <tr class="despesa-item">
+                            <td class="descricao">{{ despesa.descricao }}</td>
+                            <td class="valor">R$ {{ despesa.valor|floatformat:2 }}</td>
+                            <td class="data">{{ despesa.data }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3" class="no-expenses">Nenhuma despesa registrada.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botões para Cadastrar Nova Despesa e Voltar à Página Inicial -->
+        <div class="actions">
+            <a href="{% url 'cadastrar_despesa' %}" class="btn">Adicionar Despesa</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Voltar à Página Inicial</a>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <!-- Texto do Rodapé -->
+            <div class="footer-text">
+                <p>Finanças Pessoais &copy; 2024</p>
+            </div>
+    
+            <!-- Links com os ícones de redes sociais -->
+            <ul class="footer-links">
+                <li><a href="https://www.instagram.com/seu_usuario" target="_blank">
+                    <i class="fab fa-instagram"></i> 
+                </a></li>
+                <li><a href="https://twitter.com/seu_usuario" target="_blank">
+                    <i class="fab fa-twitter"></i> 
+                </a></li>
+                <li><a href="https://www.google.com">Politicas de privacidade</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

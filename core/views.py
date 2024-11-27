@@ -2,10 +2,26 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Receita, Despesa
 from .forms import ReceitaForm, DespesaForm
+from django.db.models import Sum
+from datetime import datetime
 
 @login_required
 def home(request):
-    return render(request, 'core/home.html')
+    # Filtrar as receitas e despesas do mês atual
+    mes_atual = datetime.now().month
+    ano_atual = datetime.now().year
+    
+    # Obter a soma das receitas e despesas do mês atual
+    receitas_mes = Receita.objects.filter(usuario=request.user, data__month=mes_atual, data__year=ano_atual).aggregate(Sum('valor'))['valor__sum'] or 0
+    despesas_mes = Despesa.objects.filter(usuario=request.user, data__month=mes_atual, data__year=ano_atual).aggregate(Sum('valor'))['valor__sum'] or 0
+
+    # Passar os valores de receitas e despesas para o template
+    context = {
+        'receitas_mes': receitas_mes,
+        'despesas_mes': despesas_mes,
+    }
+    
+    return render(request, 'core/home.html', context)
 
 @login_required
 def cadastrar_receita(request):
