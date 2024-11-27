@@ -1,6 +1,16 @@
+# Ignorar arquivos Python compilados
 *.pyc
 *.pyo
 __pycache__/
+
+# Ignorar o ambiente virtual
+/ambiente-virtual/
+
+# Ignorar banco de dados SQLite
 db.sqlite3
+
+# Ignorar arquivos de configuração e credenciais
 .env
+
+# Ignorar arquivos estáticos gerados
 /static/
