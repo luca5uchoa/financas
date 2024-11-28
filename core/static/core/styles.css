@@ -6,18 +6,18 @@ header {
     color: #DBD3D3;
     padding: 10px 20px;
     display: flex;
-    justify-content: space-between; /* Distribui os itens no cabeçalho */
+    justify-content: space-between;
     align-items: center;
 }
 
 .header-container {
     display: flex;
     align-items: center;
-    flex-grow: 1; /* Permite que o conteúdo da esquerda ocupe o espaço disponível */
+    flex-grow: 1;
 }
 
 .logout-form {
-    margin-left: auto; /* Empurra o ícone para a extrema direita */
+    margin-left: auto;
     display: flex;
     align-items: center;
 }
@@ -27,7 +27,6 @@ h1 {
     text-align: left;
     font-family: 'Roboto', sans-serif;
 }
-
 
 /* Resumo (caixas com ícones) */
 .summary {
@@ -60,7 +59,6 @@ h1 {
 .box i {
     font-size: 2rem;
     margin-bottom: 10px;
-    display: block;
 }
 
 .box p.amount {
@@ -68,16 +66,50 @@ h1 {
     font-weight: bold;
 }
 
-/* Gráfico */
+/* Ajustes para o layout de gráfico e tabela */
+.chart-and-table {
+    display: flex;
+    justify-content: center;  /* Centraliza o gráfico e a tabela */
+    gap: 20px;
+    flex-wrap: wrap;  /* Permite que os itens se ajustem em telas pequenas */
+    margin-bottom: 30px; /* Espaçamento entre o layout e outras seções */
+}
+
 .chart-container {
+    width: 45%;
+    height: 200px;
+}
+
+.reservas {
+    width: 50%;
+    padding-top: 20px;
+}
+
+.table {
     width: 100%;
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .chart-and-table {
+        flex-direction: column;  /* Coloca o gráfico e a tabela em coluna em telas menores */
+        align-items: center;
+    }
+
+    .chart-container, .reservas {
+        width: 90%;
+    }
+
+    .chart-container {
+        height: 180px;
+    }
 }
 
 /* Botão de logout */
@@ -95,21 +127,21 @@ h1 {
 .logout-button:hover {
     color: #EC8305;
 }
-//* Corpo da página */
+
+/* Corpo da página */
 body {
     margin: 0;
     padding: 0;
-    min-height: 100vh; /* Garante que o corpo ocupe 100% da altura da tela */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-bottom: 100px;
 }
 
-/* Conteúdo principal */
 main {
-    flex-grow: 1; /* Isso faz com que o conteúdo principal ocupe o espaço restante */
+    flex-grow: 1;
 }
 
-/* Rodapé fixo */
 /* Rodapé fixo */
 footer {
     position: fixed;
@@ -120,7 +152,8 @@ footer {
     color: #DBD3D3;
     padding: 20px 40px;
     text-align: center;
-    box-sizing: border-box; /* Inclui padding nas dimensões totais */
+    box-sizing: border-box;
+    z-index: 10;
 }
 
 footer .footer-content {
@@ -128,7 +161,7 @@ footer .footer-content {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte, se necessário */
+    flex-wrap: wrap;
 }
 
 footer .footer-links {
@@ -137,7 +170,7 @@ footer .footer-links {
     list-style: none;
     padding: 0;
     margin: 0;
-    flex-wrap: wrap; /* Permite que os itens da lista quebrem linha se necessário */
+    flex-wrap: wrap;
 }
 
 footer .footer-links li {
@@ -156,9 +189,9 @@ footer .footer-links a:hover {
 }
 
 footer .footer-text p {
-    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
-    overflow: hidden; /* Impede que o texto ultrapasse o limite */
-    text-overflow: ellipsis; /* Adiciona "..." caso o texto ultrapasse o limite */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Estilo para a página de listar despesas */
@@ -312,14 +345,9 @@ footer .footer-text p {
 .form-actions .btn-secondary {
     background-color: #f1f1f1;
     color: #091057;
-    text-decoration: none;
 }
 
 .form-actions .btn-secondary:hover {
     background-color: #DBD3D3;
     color: #091057;
-}
-
-.form-actions .btn-secondary:focus, .form-actions .btn-secondary:hover {
-    text-decoration: none;
 }

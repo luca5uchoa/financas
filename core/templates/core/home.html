@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
-    <!-- Importação da fonte Roboto -->
+    
+    <!-- Importação da fonte Roboto e Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     
-    <!-- Tags estáticas precisam ser carregadas -->
     {% load static %}
-    <!-- Estilos CSS -->
     <link rel="stylesheet" href="{% static 'core/styles.css' %}">
 </head>
 <body>
     <div class="container">
+        <!-- Cabeçalho -->
         <header>
             <div class="header-container">
                 <h1>Bem-vindo, {{ user.username }}!</h1>
@@ -24,30 +24,75 @@
                 </form>
             </div>
         </header>
+
+        <!-- Resumo Financeiro -->
         <div class="summary">
-            <!-- Resumo das Receitas -->
             <a href="{% url 'listar_receitas' %}" class="box">
                 <i class="fas fa-coins"></i>
                 <p>Receitas do Mês</p>
                 <p class="amount">R$ {{ receitas_mes|floatformat:2 }}</p>
             </a>
-            <!-- Resumo das Despesas -->
             <a href="{% url 'listar_despesas' %}" class="box">
                 <i class="fas fa-shopping-cart"></i>
                 <p>Despesas do Mês</p>
                 <p class="amount">R$ {{ despesas_mes|floatformat:2 }}</p>
             </a>
+            <a href="#" class="box">
+                <i class="fas fa-wallet"></i>
+                <p>Saldo Disponível</p>
+                <p class="amount" id="saldoDisponivel">R$ 0,00</p>
+            </a>
         </div>
-        <!-- Gráfico de Pizza -->
-        <div class="chart-container">
-            <canvas id="pieChart"></canvas>
+
+        <!-- Container para Gráfico e Tabela -->
+        <div class="chart-and-table">
+            <!-- Gráfico de Pizza -->
+            <div class="chart-container">
+                <canvas id="pieChart"></canvas>
+            </div>
+
+            <!-- Resumo por Categorias -->
+            <section class="reservas">
+                <h2><a href="{% url 'cadastrar_reserva' %}">Reservas Mensais por Categoria</a></h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Valor Reservado</th>
+                            <th>Saldo Restante</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in reservas_por_categoria %}
+                        <tr>
+                            <td>{{ item.reserva.get_categoria_display }}</td>
+                            <td>R$ {{ item.reserva.valor_reservado|floatformat:2 }}</td>
+                            <td>R$ {{ item.saldo_restante|floatformat:2 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3">Nenhuma reserva cadastrada.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
         </div>
     </div>
 
     <!-- Importação do Chart.js para o gráfico -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Configuração do gráfico de pizza
+        // Passar as variáveis de receita e despesa para o JavaScript
+        const receitasMes = {{ receitas_mes|default:0 }};
+        const despesasMes = {{ despesas_mes|default:0 }};
+        
+        // Calcular o saldo disponível
+        const saldoDisponivel = receitasMes - despesasMes;
+        
+        // Exibir o saldo disponível na página
+        document.getElementById('saldoDisponivel').textContent = 'R$ ' + saldoDisponivel.toFixed(2);
+
         const ctx = document.getElementById('pieChart').getContext('2d');
         const pieChart = new Chart(ctx, {
             type: 'pie',
@@ -55,7 +100,7 @@
                 labels: ['Receitas', 'Despesas'],
                 datasets: [{
                     label: 'Resumo Financeiro',
-                    data: [{{ receitas_mes }}, {{ despesas_mes }}],
+                    data: [receitasMes, despesasMes],
                     backgroundColor: ['#024CAA', '#EC8305'],
                     borderColor: ['#091057', '#DBD3D3'],
                     borderWidth: 1
@@ -77,22 +122,17 @@
             }
         });
     </script>
+
+    <!-- Rodapé -->
     <footer>
         <div class="footer-content">
-            <!-- Texto do Rodapé -->
             <div class="footer-text">
                 <p>Finanças Pessoais &copy; 2024</p>
             </div>
-    
-            <!-- Links com os ícones de redes sociais -->
             <ul class="footer-links">
-                <li><a href="https://www.instagram.com/seu_usuario" target="_blank">
-                    <i class="fab fa-instagram"></i> 
-                </a></li>
-                <li><a href="https://twitter.com/seu_usuario" target="_blank">
-                    <i class="fab fa-twitter"></i> 
-                </a></li>
-                <li><a href="https://www.google.com">Politicas de privacidade</a></li>
+                <li><a href="https://www.instagram.com/seu_usuario" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="https://twitter.com/seu_usuario" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://www.google.com">Políticas de privacidade</a></li>
             </ul>
         </div>
     </footer>

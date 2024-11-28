@@ -23,6 +23,7 @@
                         <th>Descrição</th>
                         <th>Valor</th>
                         <th>Data</th>
+                        <th>Categoria</th>  <!-- Nova coluna para Categoria -->
                     </tr>
                 </thead>
                 <tbody>
@@ -31,10 +32,11 @@
                             <td class="descricao">{{ despesa.descricao }}</td>
                             <td class="valor">R$ {{ despesa.valor|floatformat:2 }}</td>
                             <td class="data">{{ despesa.data }}</td>
+                            <td class="categoria">{{ despesa.get_categoria_display }}</td>  <!-- Exibe a categoria com o texto legível -->
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="3" class="no-expenses">Nenhuma despesa registrada.</td>
+                            <td colspan="4" class="no-expenses">Nenhuma despesa registrada.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -62,7 +64,7 @@
                 <li><a href="https://twitter.com/seu_usuario" target="_blank">
                     <i class="fab fa-twitter"></i> 
                 </a></li>
-                <li><a href="https://www.google.com">Politicas de privacidade</a></li>
+                <li><a href="https://www.google.com">Políticas de privacidade</a></li>
             </ul>
         </div>
     </footer>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Reserva</title>
+    <!-- Adicionando a mesma fonte e ícones, como na página de Receita -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    {% load static %}
+    <!-- Carregando o CSS local da mesma forma que na página cadastrar_receita -->
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cadastrar Reserva</h1>
+        </header>
+
+        <!-- Formulário para Cadastrar Reserva -->
+        <form method="post" class="form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_categoria">Categoria</label>
+                {{ form.categoria }}  <!-- Campo de Categoria -->
+            </div>
+
+            <div class="form-group">
+                <label for="id_valor_reservado">Valor Reservado</label>
+                {{ form.valor_reservado }}  <!-- Campo de Valor Reservado -->
+            </div>
+
+            <div class="form-group">
+                <label for="id_mes">Mês</label>
+                {{ form.mes }}  <!-- Campo de Mês -->
+            </div>
+
+            <div class="form-group">
+                <label for="id_ano">Ano</label>
+                {{ form.ano }}  <!-- Campo de Ano -->
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">Salvar</button>
+                <a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+
+        <footer>
+            <div class="footer-content">
+                <!-- Texto do Rodapé -->
+                <div class="footer-text">
+                    <p>Finanças Pessoais &copy; 2024</p>
+                </div>
+        
+                <!-- Links com os ícones de redes sociais -->
+                <ul class="footer-links">
+                    <li><a href="https://www.instagram.com/seu_usuario" target="_blank">
+                        <i class="fab fa-instagram"></i> 
+                    </a></li>
+                    <li><a href="https://twitter.com/seu_usuario" target="_blank">
+                        <i class="fab fa-twitter"></i> 
+                    </a></li>
+                    <li><a href="https://www.google.com">Políticas de privacidade</a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
