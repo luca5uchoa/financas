@@ -1,5 +1,5 @@
 from django import forms
-from .models import Receita, Despesa, Reserva, Categoria
+from .models import Receita, Despesa, Reserva, CATEGORIAS_CHOICES
 from django.contrib.auth.models import User
 
 class ReceitaForm(forms.ModelForm):
@@ -14,26 +14,17 @@ class DespesaForm(forms.ModelForm):
     class Meta:
         model = Despesa
         fields = ['valor', 'data', 'categoria', 'descricao']
-        widget=forms.Select(attrs={'class': 'form-control'})
-    
-
-    class Meta:
-        model = Despesa
-        fields = ['descricao', 'valor', 'data', 'categoria']
         widgets = {
-            'data': forms.DateInput(attrs={'type': 'date'})  # Campo de data com seletor de calendário
+            'data': forms.DateInput(attrs={'type': 'date'}),  # Campo de data com seletor de calendário
+            'categoria': forms.Select(attrs={'class': 'form-control'})
         }
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)  # Remove 'user' de kwargs
         super().__init__(*args, **kwargs)  # Chama o __init__ da classe pai
 
-        if user:
-            # Filtra as categorias associadas ao usuário
-            self.fields['categoria'].queryset = Categoria.objects.filter(usuario=user)
-        else:
-            # Se não houver usuário, não exibe categorias
-            self.fields['categoria'].queryset = Categoria.objects.none()
+        # Corrigido para usar a constante global
+        self.fields['categoria'].choices = CATEGORIAS_CHOICES
 
 class ReservaForm(forms.ModelForm):
     class Meta:
@@ -41,14 +32,5 @@ class ReservaForm(forms.ModelForm):
         fields = ['categoria', 'valor_reservado', 'mes', 'ano']
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)  # Remove 'user' de kwargs para não causar erro
         super().__init__(*args, **kwargs)
-
-        if user:
-            # Associa o usuário à instância do formulário, garantindo que a reserva seja associada ao usuário correto
-            self.instance.usuario = user
-            # Filtra as categorias associadas ao usuário
-            self.fields['categoria'].queryset = Categoria.objects.filter(usuario=user)
-        else:
-            # Se não houver usuário, não exibe categorias (ou pode definir um queryset padrão)
-            self.fields['categoria'].queryset = Categoria.objects.none()
+        self.fields['categoria'].choices = CATEGORIAS_CHOICES  # Usando a constante CATEGORIAS_CHOICES

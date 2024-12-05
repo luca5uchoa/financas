@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from datetime import datetime
-from .models import Receita, Despesa, Reserva, Categoria
+from .models import Receita, Despesa, Reserva
 from .forms import ReceitaForm, DespesaForm, ReservaForm
 
 @login_required
@@ -20,30 +20,25 @@ def home(request):
     ).aggregate(total=Sum('valor'))['total'] or 0
 
     # Consultar reservas e calcular total reservado, gasto e restante
-    reservas = Reserva.objects.filter(
-        usuario=request.user, mes=mes_atual, ano=ano_atual
-    )
+    reservas = Reserva.objects.filter(usuario=request.user, mes=mes_atual, ano=ano_atual)
 
     reservas_com_dados = []
     for reserva in reservas:
-        # Total gasto pela categoria da reserva
         total_gasto = Despesa.objects.filter(
             usuario=request.user,
-            categoria=reserva.categoria,  # Alteração aqui
+            categoria=reserva.categoria,
             data__month=mes_atual,
             data__year=ano_atual
         ).aggregate(total=Sum('valor'))['total'] or 0
-        
-        # Calculando o saldo restante da reserva
+
         saldo_restante = reserva.valor_reservado - total_gasto
-        
+
         reservas_com_dados.append({
             'reserva': reserva,
             'total_gasto': total_gasto,
             'saldo_restante': saldo_restante,
         })
 
-    # Passando os dados para o template
     context = {
         'receitas_mes': receitas_mes,
         'despesas_mes': despesas_mes,
@@ -52,7 +47,32 @@ def home(request):
 
     return render(request, 'core/home.html', context)
 
-# Funções para cadastrar receita, despesa e reserva permanecem as mesmas
+@login_required
+def listar_reservas(request):
+    # Agrupa as reservas por categoria e calcula o total reservado
+    categorias = (
+        Reserva.objects.filter(usuario=request.user)
+        .values('categoria')
+        .annotate(total_reservado=Sum('valor_reservado'))
+        .order_by('categoria')
+    )
+
+    # Carrega todas as reservas do usuário
+    reservas = Reserva.objects.filter(usuario=request.user)
+
+    # Contexto para o template
+    context = {
+        'categorias': categorias,
+        'reservas': reservas,
+    }
+
+    return render(request, 'core/listar_reservas.html', context)
+
+@login_required
+def listar_reservas_por_categoria(request, categoria):
+    reservas = Reserva.objects.filter(usuario=request.user, categoria=categoria)
+    return render(request, 'core/listar_reservas_por_categoria.html', {'reservas': reservas, 'categoria': categoria})
+
 @login_required
 def cadastrar_receita(request):
     if request.method == 'POST':
@@ -77,7 +97,6 @@ def cadastrar_despesa(request):
             return redirect('listar_despesas')
     else:
         form = DespesaForm()
-
     return render(request, 'core/cadastrar_despesa.html', {'form': form})
 
 @login_required
@@ -91,7 +110,6 @@ def cadastrar_reserva(request):
             return redirect('listar_reservas')
     else:
         form = ReservaForm()
-
     return render(request, 'core/cadastrar_reserva.html', {'form': form})
 
 @login_required
@@ -105,6 +123,16 @@ def listar_despesas(request):
     return render(request, 'core/listar_despesas.html', {'despesas': despesas})
 
 @login_required
-def listar_reservas(request):
-    reservas = Reserva.objects.filter(usuario=request.user).select_related('categoria')
-    return render(request, 'core/listar_reservas.html', {'reservas': reservas})
+def editar_reserva(request, id):
+    reserva = get_object_or_404(Reserva, id=id, usuario=request.user)
+    
+    if request.method == 'POST':
+        form = ReservaForm(request.POST, instance=reserva)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_reservas')
+    else:
+        form = ReservaForm(instance=reserva)
+    
+    return render(request, 'core/editar_reserva.html', {'form': form, 'reserva': reserva})
+

@@ -1,353 +1,407 @@
-/* Fonte e Tipografia */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* Estilos gerais */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
 
 header {
-    background-color: #091057;
-    color: #DBD3D3;
-    padding: 10px 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Alinha o conteúdo à direita */
     align-items: center;
+    padding: 20px;
+    background-color: #007BFF;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.header-container {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-}
-
-.logout-form {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-}
-
-h1 {
-    flex-grow: 1;
-    text-align: left;
-    font-family: 'Roboto', sans-serif;
-}
-
-/* Resumo (caixas com ícones) */
-.summary {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.box {
+/* Estilo dos itens do cabeçalho */
+header .header-item {
+    margin-left: 20px;
+    font-size: 18px;
     text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.6);
-    border: 2px solid #091057;
-    border-radius: 40px;
-    padding: 10px;
-    width: 180px;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+/* Hover para os links */
+header .header-item:hover {
+    color: #FFD700; /* Amarelo dourado ao passar o mouse */
+}
+
+/* Botões no cabeçalho */
+header .header-button {
+    padding: 10px 20px;
+    background-color: #0056b3;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+header .header-button:hover {
+    background-color: #003f7f;
+}
+
+nav ul.menu {
+    list-style: none; /* Remove os marcadores */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Coloca os itens lado a lado */
+    gap: 20px; /* Espaçamento entre os itens */
+}
+
+nav ul.menu li {
+    margin: 0;
+}
+
+nav ul.menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav ul.menu li a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+
+/* Seção do saldo */
+.saldo {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    color: #091057;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
 }
 
-.box:hover {
-    transform: scale(1.05);
-    background-color: #EC8305;
-    color: #ffffff;
+.saldo h2 {
+    font-size: 22px;
+    color: #474646;
+    font-weight: lighter;
 }
 
-.box i {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.box p.amount {
-    font-size: 1.2rem;
+.saldo-valor {
+    font-size: 32px;
+    color: #000000;
     font-weight: bold;
 }
 
-/* Ajustes para o layout de gráfico e tabela */
-.chart-and-table {
-    display: flex;
-    justify-content: center;  /* Centraliza o gráfico e a tabela */
-    gap: 20px;
-    flex-wrap: wrap;  /* Permite que os itens se ajustem em telas pequenas */
-    margin-bottom: 30px; /* Espaçamento entre o layout e outras seções */
-}
-
-.chart-container {
-    width: 45%;
-    height: 200px;
-}
-
-.reservas {
-    width: 50%;
-    padding-top: 20px;
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table th, .table td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .chart-and-table {
-        flex-direction: column;  /* Coloca o gráfico e a tabela em coluna em telas menores */
-        align-items: center;
-    }
-
-    .chart-container, .reservas {
-        width: 90%;
-    }
-
-    .chart-container {
-        height: 180px;
-    }
-}
-
-/* Botão de logout */
-.logout-button {
-    background: transparent;
-    border: none;
-    color: #DBD3D3;
-    font-size: 1em;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.logout-button:hover {
-    color: #EC8305;
-}
-
-/* Corpo da página */
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 100px;
-}
-
-main {
-    flex-grow: 1;
-}
-
-/* Rodapé fixo */
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #091057;
-    color: #DBD3D3;
-    padding: 20px 40px;
-    text-align: center;
-    box-sizing: border-box;
-    z-index: 10;
-}
-
-footer .footer-content {
+/* Seção de receitas e despesas */
+.caixas {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    flex-wrap: wrap;
+    margin: 20px;
 }
 
-footer .footer-links {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex-wrap: wrap;
+.caixa {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 45%;
 }
 
-footer .footer-links li {
-    display: inline-block;
-}
-
-footer .footer-links a {
-    color: #EC8305;
-    text-decoration: none;
+.caixa h3 {
     font-size: 20px;
+    color: #0000008c;
+    font-weight: lighter;
 }
 
-footer .footer-links a:hover {
-    color: #024CAA;
+.valor {
+    font-size: 24px;
+    color: #000000;
+    font-weight: bold;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #1E88E5;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn:hover {
+    background-color: #1565C0;
+}
+
+/* Seção de categorias */
+.saldo-categorias {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.saldo-categorias h3 {
+    font-size: 22px;
+    color: #333;
+}
+
+.ajustar-metas {
+    display: inline-block;
+    font-size: 16px;
+    color: #1E88E5;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.ajustar-metas:hover {
     text-decoration: underline;
 }
 
-footer .footer-text p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.categoria {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
 }
 
-/* Estilo para a página de listar despesas */
-.actions {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+.categoria span {
+    font-size: 18px;
+    color: #333;
+    flex: 1;
+}
+
+.progresso {
+    height: 8px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.categoria p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Rodapé */
+footer {
+    background-color: #2D6A4F;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
     margin-top: 20px;
 }
 
-.actions .btn {
-    background-color: #091057;
-    color: #DBD3D3;
-    padding: 10px 20px;
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: bold;
-    text-align: center;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+.cabeçalho-saldo-categorias {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between; /* Distribui os itens para os extremos da div */
 }
 
-.actions .btn:hover {
-    background-color: #EC8305;
-    transform: scale(1.05);
+/* Estilos para o gráfico de barras */
+.categoria-grafico {
+    width: 100%;
+    height: 400px; /* Ajuste a altura conforme necessário */
+    padding: 20px;
+    margin: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.actions .btn-secondary {
-    background-color: #f1f1f1;
-    color: #091057;
-}
-
-.actions .btn-secondary:hover {
-    background-color: #DBD3D3;
-    color: #091057;
+canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* Estilo para a tabela */
-.despesas-table, .receitas-table {
+table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+    border-collapse: collapse; /* Remove as linhas entre as células */
+    margin: 20px 0;
 }
 
-.despesas-table th, .receitas-table th,
-.despesas-table td, .receitas-table td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+/* Estilo para as células da tabela */
+table td, table th {
+    padding: 12px;
+    text-align: left; /* Alinha o texto à esquerda nas células */
+    vertical-align: middle;
 }
 
-.despesas-table th, .receitas-table th {
-    background-color: #091057;
-    color: #DBD3D3;
-}
-
-.despesas-table td, .receitas-table td {
-    background-color: #f9f9f9;
-}
-
-.despesas-table .descricao, .receitas-table .descricao {
+/* Estilo para as cabeçalhos da tabela */
+table th {
+    background-color: #007BFF;
+    color: white;
+    text-align: left; /* Cabeçalhos centralizados */
     font-weight: bold;
 }
 
-.despesas-table .valor, .receitas-table .valor {
-    color: #EC8305;
+/* Remove bordas das células */
+table td {
+    border: none;
 }
 
-.despesas-table .data, .receitas-table .data {
-    color: #091057;
-}
-
-.despesas-table .no-expenses, .receitas-table .no-receitas {
-    text-align: center;
-    color: #777;
-    font-size: 16px;
-    padding: 20px;
-}
-
-.despesas-table tr:hover, .receitas-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Formulário */
-.form {
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    margin: 40px auto;
-    width: 100%;
-}
-
-.form-group {
+/* Estilo para as categorias, que são agrupadas por categorias */
+.categoria {
+    padding: 15px;
     margin-bottom: 20px;
-    width: 100%;
-}
-
-.form-group input, .form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
+    background-color: #f1f1f1;
     border-radius: 8px;
-    font-size: 16px;
-    color: #091057;
-    background-color: rgba(255, 255, 255, 0.6);
 }
 
-.form-group input:focus, .form-group select:focus {
-    border-color: #EC8305;
-    outline: none;
+.bordas-tabela{
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.form-group label {
-    font-size: 16px;
-    color: #091057;
-    display: block;
-    margin-bottom: 8px;
+/* Estilo do botão de ação */
+.btn-acao {
+    
+    padding: 12px 20px;
+    background-color: #007BFF; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    font-size: 16px; /* Tamanho da fonte */
+    font-weight: bold; /* Fonte em negrito */
+    text-align: center;
+    border-radius: 8px; /* Bordas arredondadas */
+    border: 2px solid #007BFF; /* Cor da borda */
+    cursor: pointer; /* Cursor em forma de mão */
+    transition: all 0.3s ease; /* Animação suave para as transições */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Sombra suave */
+    text-decoration: none;
 }
 
-/* Botões */
-.form-actions {
+/* Efeito hover (quando o botão é passado com o mouse) */
+.btn-acao:hover {
+    background-color: #0056b3; /* Cor de fundo mais escura no hover */
+    border-color: #0056b3; /* Cor da borda no hover */
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3); /* Aumenta a sombra no hover */
+    transform: translateY(-2px); /* Dá um efeito de "subir" no botão */
+}
+
+
+.botoes{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+
+}
+
+.botoes-form{
     display: flex;
     justify-content: space-between;
-    gap: 20px;
-    margin-top: 20px;
+    padding: 20px;
+
 }
 
-.form-actions .btn {
-    padding: 10px 20px;
-    border-radius: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    border: none;
-    font-size: 16px;
-    width: 48%;
+
+/* Estilo geral do formulário */
+form {
+    
+    
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    
+    
+    
+    
+
+    
+    
+    
+}
+
+/* Título principal do formulário */
+form h1 {
     text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
 }
 
-.form-actions .btn-save {
-    background-color: #091057;
-    color: #DBD3D3;
+/* Estilo para cada linha de campo (rótulo e campo de entrada) */
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px; /* Espaçamento entre os campos */
 }
 
-.form-actions .btn-save:hover {
-    background-color: #EC8305;
-    transform: scale(1.05);
+/* Rótulo do campo (título da categoria) */
+.form-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: left; /* Alinha o rótulo à esquerda */
+    width: 30%; /* Largura fixa para os rótulos */
+    margin-right: 10px;
 }
 
-.form-actions .btn-secondary {
-    background-color: #f1f1f1;
-    color: #091057;
+/* Campo de entrada do formulário (input, textarea, select, etc.) */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 65%; /* Largura maior para os campos */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border 0.3s ease;
+    text-align: left;
 }
 
-.form-actions .btn-secondary:hover {
-    background-color: #DBD3D3;
-    color: #091057;
+/* Efeito de foco nos campos */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #007BFF; /* Cor de borda no foco */
+    outline: none; /* Remove o contorno padrão */
+}
+
+/* Estilo para o botão de envio */
+button[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+    }
 }

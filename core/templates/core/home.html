@@ -1,120 +1,134 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/styles.css' %}">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
-    
-    <!-- Importação da fonte Roboto e Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <!-- Cabeçalho -->
-        <header>
-            <div class="header-container">
-                <h1>Bem-vindo, {{ user.username }}!</h1>
-                <form action="{% url 'logout' %}" method="post" class="logout-form">
-                    {% csrf_token %}
-                    <button type="submit" class="logout-button"><i class="fas fa-sign-out-alt"></i> Sair</button>
-                </form>
-            </div>
-        </header>
+    <header>
+        <div >
+        
+            <header>
 
-        <!-- Resumo Financeiro -->
-        <div class="summary">
-            <a href="{% url 'listar_receitas' %}" class="box">
-                <i class="fas fa-coins"></i>
-                <p>Receitas do Mês</p>
-                <p class="amount">R$ {{ receitas_mes|floatformat:2 }}</p>
-            </a>
-            <a href="{% url 'listar_despesas' %}" class="box">
-                <i class="fas fa-shopping-cart"></i>
-                <p>Despesas do Mês</p>
-                <p class="amount">R$ {{ despesas_mes|floatformat:2 }}</p>
-            </a>
-            <a href="#" class="box">
-                <i class="fas fa-wallet"></i>
-                <p>Saldo Disponível</p>
-                <p class="amount" id="saldoDisponivel">R$ 0,00</p>
-            </a>
+                <div class="header-container">
+                    <h1>Bem-vindo, {{ user.username }}!</h1>
+                    
+                </div>
+                <h1>Logo</h1>
+                <nav>
+                    <ul class="menu">
+                        <li><a href="/">Início</a></li>
+                        <li><a href="/listar_receitas">Receitas</a></li>
+                        <li><a href="/listar_despesas">Despesas</a></li>
+                        <li><a href="/listar_reservas">Metas</a></li>
+
+                        <li><form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit"> Sair</button>
+                        </form>
+                    </li>
+                    </ul>
+                </nav>
+            </header>
+            
+        </div>
+    </header>
+   
+
+    <main>
+        <!-- Seção de saldo -->
+        <section class="saldo">
+            <h2>Saldo Total</h2>
+            <p class="saldo-valor" id="saldo-calculado">R$ 0,00</p>
+        </section>
+
+        <!-- Seção de receitas e despesas -->
+        <section class="caixas">
+            <div class="caixa receita">
+                <h3>Receitas do mês</h3>
+                <p class="valor">R$ {{ receitas_mes|floatformat:2 }}</p>
+                <a href="{% url 'cadastrar_receita' %}" class="btn">Adicionar Receita</a>
+            </div>
+            <div class="caixa despesa">
+                <h3>Despesas do mês</h3>
+                <p class="valor">R$ {{ despesas_mes|floatformat:2 }}</p>
+                <a href="{% url 'cadastrar_despesa' %}" class="btn">Adicionar Despesa</a>
+            </div>
+        </section>
+
+        <!-- Cabeçalho e link de ajustes -->
+        <div class="cabeçalho-saldo-categorias">
+            <h3>Saldo por Categoria</h3>
+            <a href="/reservas" class="ajustar-metas">+ Ajustar Metas</a>
         </div>
 
-        <!-- Container para Gráfico e Tabela -->
-        <div class="chart-and-table">
-            <!-- Gráfico de Pizza -->
-            <div class="chart-container">
-                <canvas id="pieChart"></canvas>
+        <!-- Saldo por Categoria -->
+        <section class="saldo-categorias">
+            {% for item in reservas_por_categoria %}
+            <div class="categoria">
+                <span>{{ item.reserva.categoria }}</span>
+                <div class="progresso" style="width: {{ item.reserva.percentual }}%; background-color: {{ item.reserva.cor }}"></div>
+                <p>R$ {{ item.total_gasto|floatformat:2 }} de R$ {{ item.reserva.valor_reservado|floatformat:2 }} - Falta R$ {{ item.saldo_restante|floatformat:2 }}</p>
             </div>
+            {% endfor %}
+        </section>
 
-            <!-- Resumo por Categorias -->
-            <section class="reservas">
-                <h2><a href="{% url 'cadastrar_reserva' %}">Reservas Mensais por Categoria</a></h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Categoria</th>
-                            <th>Valor Reservado</th>
-                            <th>Saldo Restante</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in reservas_por_categoria %}
-                        <tr>
-                            <td>{{ item.reserva.get_categoria_display }}</td>
-                            <td>R$ {{ item.reserva.valor_reservado|floatformat:2 }}</td>
-                            <td>R$ {{ item.saldo_restante|floatformat:2 }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="3">Nenhuma reserva cadastrada.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </section>
+        <!-- Gráfico de categorias -->
+        <div class="categoria-grafico">
+            <canvas id="categoryChart"></canvas>
         </div>
-    </div>
+    </main>
 
-    <!-- Importação do Chart.js para o gráfico -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <footer>
+        <p>&copy; 2024 Finanças Pessoais</p>
+    </footer>
+
     <script>
-        // Passar as variáveis de receita e despesa para o JavaScript
-        const receitasMes = {{ receitas_mes|default:0 }};
-        const despesasMes = {{ despesas_mes|default:0 }};
+        // Preparação dos dados para o gráfico
+        const ctx = document.getElementById('categoryChart').getContext('2d');
+        const categorias = {{ reservas_por_categoria|safe }};  // Aqui você garante que o Django renderize a lista como JSON
         
-        // Calcular o saldo disponível
-        const saldoDisponivel = receitasMes - despesasMes;
-        
-        // Exibir o saldo disponível na página
-        document.getElementById('saldoDisponivel').textContent = 'R$ ' + saldoDisponivel.toFixed(2);
-
-        const ctx = document.getElementById('pieChart').getContext('2d');
-        const pieChart = new Chart(ctx, {
-            type: 'pie',
+        // Mapear os dados para valores numéricos de gasto e saldo restante
+        const nomesCategorias = categorias.map(item => item.reserva.categoria);
+        const valoresGastos = categorias.map(item => item.total_gasto);
+        const valoresRestantes = categorias.map(item => item.saldo_restante);
+    
+        // Configuração do gráfico
+        new Chart(ctx, {
+            type: 'horizontalBar', // Tipo de gráfico de barras horizontais
             data: {
-                labels: ['Receitas', 'Despesas'],
-                datasets: [{
-                    label: 'Resumo Financeiro',
-                    data: [receitasMes, despesasMes],
-                    backgroundColor: ['#024CAA', '#EC8305'],
-                    borderColor: ['#091057', '#DBD3D3'],
-                    borderWidth: 1
-                }]
+                labels: nomesCategorias, // Categorias no eixo X
+                datasets: [
+                    {
+                        label: 'Valor Gasto',
+                        data: valoresGastos, // Dados de valor gasto
+                        backgroundColor: 'rgba(220, 53, 69, 0.7)', // Cor da barra para gasto
+                        borderColor: 'rgba(220, 53, 69, 1)', // Cor da borda da barra
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Saldo Restante',
+                        data: valoresRestantes, // Dados de saldo restante
+                        backgroundColor: 'rgba(0, 123, 255, 0.7)', // Cor da barra para saldo restante
+                        borderColor: 'rgba(0, 123, 255, 1)', // Cor da borda da barra
+                        borderWidth: 1
+                    }
+                ]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            color: '#091057',
-                            font: {
-                                family: 'Roboto'
+                scales: {
+                    x: {
+                        beginAtZero: true, // Começa a escala no zero
+                        ticks: {
+                            callback: function(value) {
+                                return 'R$ ' + value.toFixed(2); // Formatar as unidades no eixo X
                             }
                         }
                     }
@@ -122,19 +136,18 @@
             }
         });
     </script>
-
-    <!-- Rodapé -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-text">
-                <p>Finanças Pessoais &copy; 2024</p>
-            </div>
-            <ul class="footer-links">
-                <li><a href="https://www.instagram.com/seu_usuario" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                <li><a href="https://twitter.com/seu_usuario" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="https://www.google.com">Políticas de privacidade</a></li>
-            </ul>
-        </div>
-    </footer>
+    
+    <script>
+        // Obter os valores de receitas e despesas diretamente do HTML
+        const receitaValor = parseFloat("{{ receitas_mes|floatformat:2 }}".replace(',', '.')) || 0;
+        const despesaValor = parseFloat("{{ despesas_mes|floatformat:2 }}".replace(',', '.')) || 0;
+    
+        // Calcular o saldo
+        const saldoTotal = receitaValor - despesaValor;
+    
+        // Exibir o saldo calculado no elemento com ID 'saldo-calculado'
+        document.getElementById('saldo-calculado').textContent = 
+            `R$ ${saldoTotal.toFixed(2).replace('.', ',')}`;
+    </script>
 </body>
 </html>

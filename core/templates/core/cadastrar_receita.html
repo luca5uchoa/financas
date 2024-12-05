@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="{% static 'core/styles.css' %}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Cadastrar Receita</h1>
-        </header>
-
+    <header>
+        <h1>Cadastrar Receita</h1>
+    </header>
+    <div>
+        
         <!-- Formulário para Cadastrar Receita -->
         <form method="post" class="form">
             {% csrf_token %}
@@ -34,30 +34,12 @@
                 <input type="date" id="id_data" name="data" required class="input">
             </div>
 
-            <div class="form-actions">
-                <button type="submit" class="btn btn-save">Salvar</button>
-                <a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
+            <div class="botoes-form">
+                <button type="submit" class="btn-acao">Salvar</button>
+                <a href="{% url 'home' %}" class="btn-acao">Cancelar</a>
             </div>
         </form>
-        <footer>
-            <div class="footer-content">
-                <!-- Texto do Rodapé -->
-                <div class="footer-text">
-                    <p>Finanças Pessoais &copy; 2024</p>
-                </div>
         
-                <!-- Links com os ícones de redes sociais -->
-                <ul class="footer-links">
-                    <li><a href="https://www.instagram.com/seu_usuario" target="_blank">
-                        <i class="fab fa-instagram"></i> 
-                    </a></li>
-                    <li><a href="https://twitter.com/seu_usuario" target="_blank">
-                        <i class="fab fa-twitter"></i> 
-                    </a></li>
-                    <li><a href="https://www.google.com">Politicas de privacidade</a></li>
-                </ul>
-            </div>
-        </footer>
     </div>
 </body>
 </html>

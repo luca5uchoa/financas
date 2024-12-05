@@ -20,6 +20,11 @@
             {% csrf_token %}
 
             <div class="form-group">
+                <label for="id_categoria">Categoria</label>
+                {{ form.categoria }}  <!-- Agora, o campo categoria será renderizado -->
+            </div>
+
+            <div class="form-group">
                 <label for="id_descricao">Descrição</label>
                 {{ form.descricao }}
             </div>
@@ -34,36 +39,17 @@
                 {{ form.data }}  <!-- Aqui está o campo de data sendo renderizado com as configurações do Django -->
             </div>
 
-            <div class="form-group">
-                <label for="id_categoria">Categoria</label>
-                {{ form.categoria }}  <!-- Agora, o campo categoria será renderizado -->
+            <div class="botoes-form">
+                <button type="submit" class="btn-acao">Salvar</button>
+                <a href="{% url 'home' %}" class="btn-acao">Cancelar</a>
             </div>
 
-            <div class="form-actions">
-                <button type="submit" class="btn btn-save">Salvar</button>
-                <a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
-            </div>
+            
+
         </form>
+        
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <!-- Texto do Rodapé -->
-            <div class="footer-text">
-                <p>Finanças Pessoais &copy; 2024</p>
-            </div>
-    
-            <!-- Links com os ícones de redes sociais -->
-            <ul class="footer-links">
-                <li><a href="https://www.instagram.com/seu_usuario" target="_blank">
-                    <i class="fab fa-instagram"></i> 
-                </a></li>
-                <li><a href="https://twitter.com/seu_usuario" target="_blank">
-                    <i class="fab fa-twitter"></i> 
-                </a></li>
-                <li><a href="https://www.google.com">Políticas de privacidade</a></li>
-            </ul>
-        </div>
-    </footer>
+   
 </body>
 </html>
