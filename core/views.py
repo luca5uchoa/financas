@@ -1,48 +1,54 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from datetime import datetime
 from .models import Receita, Despesa, Reserva
 from .forms import ReceitaForm, DespesaForm, ReservaForm
+from django.utils import timezone
+
+# Função para calcular o saldo restante de cada categoria
+def get_saldo_restante():
+    reservas = Reserva.objects.all()
+    saldos = []
+    for reserva in reservas:
+        valor_gasto = Despesa.objects.filter(categoria=reserva.categoria).aggregate(Sum('valor'))['valor__sum'] or 0
+        saldo_restante = reserva.valor_reservado - valor_gasto
+        saldos.append({
+            'categoria': reserva.categoria,
+            'saldo_restante': saldo_restante,
+            'valor_gasto': valor_gasto,
+            'valor_reservado': reserva.valor_reservado,
+            'percentual': (valor_gasto / reserva.valor_reservado) * 100 if reserva.valor_reservado > 0 else 0
+        })
+    return saldos
 
 @login_required
 def home(request):
-    mes_atual = datetime.now().month
-    ano_atual = datetime.now().year
+    # Calcular as receitas e despesas do mês
+    receitas_mes = Receita.objects.filter(data__month=timezone.now().month).aggregate(total=Sum('valor'))['total'] or 0
+    despesas_mes = Despesa.objects.filter(data__month=timezone.now().month).aggregate(total=Sum('valor'))['total'] or 0
+    
+    # Calcular o saldo
+    saldo = receitas_mes - despesas_mes
+    
+    # Calcular o saldo por categoria
+    reservas_por_categoria = get_saldo_restante()  # Chama a função para pegar os saldos restantes das categorias
 
-    # Calcular receitas e despesas do mês atual
-    receitas_mes = Receita.objects.filter(
-        usuario=request.user, data__month=mes_atual, data__year=ano_atual
-    ).aggregate(total=Sum('valor'))['total'] or 0
-
-    despesas_mes = Despesa.objects.filter(
-        usuario=request.user, data__month=mes_atual, data__year=ano_atual
-    ).aggregate(total=Sum('valor'))['total'] or 0
-
-    # Consultar reservas e calcular total reservado, gasto e restante
-    reservas = Reserva.objects.filter(usuario=request.user, mes=mes_atual, ano=ano_atual)
-
-    reservas_com_dados = []
-    for reserva in reservas:
-        total_gasto = Despesa.objects.filter(
-            usuario=request.user,
-            categoria=reserva.categoria,
-            data__month=mes_atual,
-            data__year=ano_atual
-        ).aggregate(total=Sum('valor'))['total'] or 0
-
-        saldo_restante = reserva.valor_reservado - total_gasto
-
-        reservas_com_dados.append({
-            'reserva': reserva,
-            'total_gasto': total_gasto,
-            'saldo_restante': saldo_restante,
-        })
-
+    # Extrair as informações necessárias para o gráfico
+    categorias_nome = [reserva['categoria'] for reserva in reservas_por_categoria]
+    valores_gastos = [reserva['valor_gasto'] for reserva in reservas_por_categoria]
+    valores_restantes = [reserva['saldo_restante'] for reserva in reservas_por_categoria]
+    
+    # Contexto para o template
     context = {
         'receitas_mes': receitas_mes,
         'despesas_mes': despesas_mes,
-        'reservas_por_categoria': reservas_com_dados,
+        'saldo': saldo,
+        'reservas_por_categoria': reservas_por_categoria,
+        'categorias_nome': categorias_nome,
+        'valores_gastos': valores_gastos,
+        'valores_restantes': valores_restantes,
     }
 
     return render(request, 'core/home.html', context)
@@ -70,6 +76,7 @@ def listar_reservas(request):
 
 @login_required
 def listar_reservas_por_categoria(request, categoria):
+    # Filtro das reservas por categoria e usuário
     reservas = Reserva.objects.filter(usuario=request.user, categoria=categoria)
     return render(request, 'core/listar_reservas_por_categoria.html', {'reservas': reservas, 'categoria': categoria})
 
@@ -135,4 +142,3 @@ def editar_reserva(request, id):
         form = ReservaForm(instance=reserva)
     
     return render(request, 'core/editar_reserva.html', {'form': form, 'reserva': reserva})
-

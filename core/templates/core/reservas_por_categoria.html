@@ -7,6 +7,31 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- Cabeçalho -->
+    <header class="header-container">
+        <div class="header-content">
+            <a href="/" class="header-logo">
+                <i class="fas fa-piggy-bank"></i>
+            </a>
+
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">Início</a></li>
+                    <li><a href="/listar_receitas" class="nav-link">Receitas</a></li>
+                    <li><a href="/listar_despesas" class="nav-link">Despesas</a></li>
+                    <li><a href="/listar_reservas" class="nav-link">Metas</a></li>
+                </ul>
+            </nav>
+            <a>
+                <form action="{% url 'logout' %}" method="post" class="header-logout">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
+            </a>
+        </div>
+    </header>
     <div class="container mt-5">
         
 
@@ -33,5 +58,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <footer>
+        <p>&copy; 2024 Finanças Pessoais</p>
+    </footer>
 </body>
 </html>

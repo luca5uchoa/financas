@@ -10,45 +10,76 @@
     <link rel="stylesheet" href="{% static 'core/styles.css' %}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Despesas</h1>
-        </header>
+    <!-- Cabeçalho -->
+    <header class="header-container">
+        <div class="header-content">
+            <a href="/" class="header-logo">
+                <i class="fas fa-piggy-bank"></i>
+            </a>
 
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">Início</a></li>
+                    <li><a href="/listar_receitas" class="nav-link">Receitas</a></li>
+                    <li><a href="/listar_despesas" class="nav-link">Despesas</a></li>
+                    <li><a href="/listar_reservas" class="nav-link">Metas</a></li>
+                </ul>
+            </nav>
+            <a>
+                <form action="{% url 'logout' %}" method="post" class="header-logout">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
+            </a>
+        </div>
+    </header>
+    <main>
+        <!-- Título da Página -->
+        <div class="titulo-pagina">
+            <h1>Lista de Despesas</h1>
+        </div>
+    
         <!-- Tabela de Despesas -->
-        <div class="bordas-tabela">
-            <table>
-                <thead>
+        <div class="despesas-container">
+            <table class="tabela-despesas">
+                <thead class="cabecalho-despesas">
                     <tr>
-                        <th>Descrição</th>
-                        <th>Valor</th>
-                        <th>Data</th>
-                        <th>Categoria</th>  <!-- Nova coluna para Categoria -->
+                        <th class="col-descricao">Descrição</th>
+                        <th class="col-valor">Valor</th>
+                        <th class="col-data">Data</th>
+                        <th class="col-categoria">Categoria</th> <!-- Nova coluna para Categoria -->
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="corpo-despesas">
                     {% for despesa in despesas %}
-                        <tr>
-                            <td class="descricao">{{ despesa.descricao }}</td>
-                            <td class="valor">R$ {{ despesa.valor|floatformat:2 }}</td>
-                            <td class="data">{{ despesa.data }}</td>
-                            <td class="categoria">{{ despesa.get_categoria_display }}</td>  <!-- Exibe a categoria com o texto legível -->
-                        </tr>
+                    <tr class="linha-despesa">
+                        <td class="col-descricao">{{ despesa.descricao }}</td>
+                        <td class="col-valor">R$ {{ despesa.valor|floatformat:2 }}</td>
+                        <td class="col-data">{{ despesa.data }}</td>
+                        <td class="col-categoria">{{ despesa.get_categoria_display }}</td> <!-- Exibe a categoria com o texto legível -->
+                    </tr>
                     {% empty %}
-                        <tr>
-                            <td colspan="4" class="no-expenses">Nenhuma despesa registrada.</td>
-                        </tr>
+                    <tr>
+                        <td colspan="4" class="mensagem-sem-despesas">Nenhuma despesa registrada.</td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-
-        <!-- Botões para Cadastrar Nova Despesa e Voltar à Página Inicial -->
-        <div class="botoes">
-            <a href="{% url 'cadastrar_despesa' %}" class="btn-acao">Adicionar Despesa</a>
-            
-        </div>
-    </div>
     
+        <!-- Botões para Cadastrar Nova Despesa -->
+        <div class="botao-lista">
+            <a href="{% url 'cadastrar_despesa' %}" class="botao-acao">Adicionar Despesa</a>
+        </div>
+    </main>
+    
+    
+        
+    
+    <footer>
+        <p>&copy; 2024 Finanças Pessoais</p>
+    </footer>
 </body>
 </html>

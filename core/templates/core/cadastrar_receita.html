@@ -10,11 +10,36 @@
     <link rel="stylesheet" href="{% static 'core/styles.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Cadastrar Receita</h1>
+    <!-- Cabeçalho -->
+    <header class="header-container">
+        <div class="header-content">
+            <a href="/" class="header-logo">
+                <i class="fas fa-piggy-bank"></i>
+            </a>
+
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">Início</a></li>
+                    <li><a href="/listar_receitas" class="nav-link">Receitas</a></li>
+                    <li><a href="/listar_despesas" class="nav-link">Despesas</a></li>
+                    <li><a href="/listar_reservas" class="nav-link">Metas</a></li>
+                </ul>
+            </nav>
+            <a>
+                <form action="{% url 'logout' %}" method="post" class="header-logout">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
+            </a>
+        </div>
     </header>
-    <div>
-        
+    
+    <main>
+        <div class="titulo-pagina">
+            <h1>Cadastrar Receita</h1>
+        </div>
         <!-- Formulário para Cadastrar Receita -->
         <form method="post" class="form">
             {% csrf_token %}
@@ -36,10 +61,17 @@
 
             <div class="botoes-form">
                 <button type="submit" class="btn-acao">Salvar</button>
-                <a href="{% url 'home' %}" class="btn-acao">Cancelar</a>
+                <a href="{% url 'home' %}" class="btn-cancelar">Cancelar</a>
             </div>
         </form>
+
+    </main>
         
-    </div>
+        
+        
+    
+    <footer>
+        <p>&copy; 2024 Finanças Pessoais</p>
+    </footer>
 </body>
 </html>

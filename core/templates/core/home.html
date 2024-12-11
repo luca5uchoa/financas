@@ -8,99 +8,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 </head>
 
 <body>
+    <!-- Cabeçalho -->
+    <header class="header-container">
+        <div class="header-content">
+            <a href="/" class="header-logo">
+                <i class="fas fa-piggy-bank"></i>
+            </a>
 
-    <header>
-        <a href="/" class="logo"><i class="fa fa-piggy-bank"></i> Finanças</a>
-
-        <div class="nav-container">
-            <nav>
-                <ul class="menu">
-                    <li><a href="/listar_receitas">Receitas</a></li>
-                    <li><a href="/listar_despesas">Despesas</a></li>
-                    <li><a href="/listar_reservas">Metas</a></li>
-                    <li>
-                        <form action="{% url 'logout' %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit">sair</button>
-                            <!-- Ícone de saída (seta) -->
-                        </form>
-                    </li>
-
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">Início</a></li>
+                    <li><a href="/listar_receitas" class="nav-link">Receitas</a></li>
+                    <li><a href="/listar_despesas" class="nav-link">Despesas</a></li>
+                    <li><a href="/listar_reservas" class="nav-link">Metas</a></li>
                 </ul>
             </nav>
+            <a>
+                <form action="{% url 'logout' %}" method="post" class="header-logout">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
+            </a>
         </div>
     </header>
 
     <main>
         <!-- Seção de saldo -->
-        <section class="saldo">
-            <h2>Saldo Total</h2>
-            <p class="saldo-valor" id="saldo-calculado">R$ 0,00</p>
+        <section class="section-saldo">
+            <h2>Saldo</h2>
+            <p class="saldo-valor" id="saldo-calculado">R$ {{ saldo|floatformat:2 }}</p>
         </section>
-
 
         <!-- Seção de receitas e despesas -->
-        <section class="caixas">
+        <section class="section-caixas">
             <div class="caixa-receita">
-                <div class="caixa-header">
-                    <div class="caixa-icone-receita">
-                        <i class="fa fa-coins"></i>
-                    </div>
-                    <div>
-                        <h3>Receitas do mês</h3>
-                        <p>R$ {{ receitas_mes|floatformat:2 }}</p>
-
-                    </div>
-
+                <i class="fas fa-wallet icone-receita"></i>
+                <div class="conteudo-receita">
+                    <h3>Receitas do mês</h3>
+                    <p class="valor">R$ {{ receitas_mes|floatformat:2 }}</p>
                 </div>
-
-                <a href="{% url 'cadastrar_receita' %}" class="btn">Adicionar Receita</a>
             </div>
+
             <div class="caixa-despesa">
-                <div class="caixa-header">
-                    <div class="caixa-icone-despesa">
-                        <i class="fa fa-shopping-cart"></i>
-                    </div>
-                    <div>
-                        <h3>Despesas do mês</h3>
-                        <p>R$ {{ despesas_mes|floatformat:2 }} </p>
-                    </div>
-
+                <i class="fas fa-shopping-cart icone-despesa"></i>
+                <div class="conteudo-despesa">
+                    <h3>Despesas do mês</h3>
+                    <p class="valor">R$ {{ despesas_mes|floatformat:2 }}</p>
                 </div>
-
-                <a href="{% url 'cadastrar_despesa' %}" class="btn">Adicionar Despesa</a>
             </div>
         </section>
 
-
-        <!-- Cabeçalho e link de ajustes -->
-        <div class="cabeçalho-saldo-categorias">
-            
-            <a href="/reservas" class="ajustar-metas">+ Ajustar metas de gastos</a>
+        <div class="botoes-rec-desp">
+            <a href="{% url 'cadastrar_receita' %}" class="btn-rec">Adicionar Receita</a>
+            <a href="{% url 'cadastrar_despesa' %}" class="btn-desp">Adicionar Despesa</a>
         </div>
 
-        <!-- Saldo por Categoria -->
-        <section class="saldo-categorias">
-            <h3>Saldo por Categoria</h3>
-
-            {% for item in reservas_por_categoria %}
-            <div class="categoria">
-                <span>{{ item.reserva.categoria }}</span>
-                <div class="progresso"
-                    style="width: {{ item.reserva.percentual }}%; background-color: {{ item.reserva.cor }}"></div>
-                <p>R$ {{ item.total_gasto|floatformat:2 }} de R$ {{ item.reserva.valor_reservado|floatformat:2 }} -
-                    Falta R$ {{ item.saldo_restante|floatformat:2 }}</p>
+        <!-- Seção de gráficos individuais de reserva por categoria -->
+        <section class="section-graficos-individuais">
+            <h2>Gráficos de Reservas por Categoria</h2>
+            <div class="grafico-container">
+                {% for reserva in reservas_por_categoria %}
+                    <div class="grafico-categoria">
+                        <h3>{{ reserva.categoria }}</h3>
+                        <canvas id="graficoCategoria{{ forloop.counter }}" style="width: 100%; height: 100px; padding: 20px;"></canvas>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </section>
 
-
+        <!-- Seção de lista de reservas por categoria -->
+        <section class="section-reservas-categorias">
+            <h3>Reservas por Categoria</h3>
+            <ul class="categorias-lista">
+                {% for reserva in reservas_por_categoria %}
+                    <li>
+                        <p>{{ reserva.categoria }}: R$ {{ reserva.saldo_restante|floatformat:2 }} (Gasto: R$ {{ reserva.valor_gasto|floatformat:2 }} / Reservado: R$ {{ reserva.valor_reservado|floatformat:2 }})</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
 
     </main>
 
@@ -109,64 +104,59 @@
     </footer>
 
     <script>
-        // Preparação dos dados para o gráfico
-        const ctx = document.getElementById('categoryChart').getContext('2d');
-        const categorias = {{ reservas_por_categoria| safe }};  // Aqui você garante que o Django renderize a lista como JSON
-
-        // Mapear os dados para valores numéricos de gasto e saldo restante
-        const nomesCategorias = categorias.map(item => item.reserva.categoria);
-        const valoresGastos = categorias.map(item => item.total_gasto);
-        const valoresRestantes = categorias.map(item => item.saldo_restante);
-
-        // Configuração do gráfico
-        new Chart(ctx, {
-            type: 'horizontalBar', // Tipo de gráfico de barras horizontais
+        {% for reserva in reservas_por_categoria %}
+        var ctx{{ forloop.counter }} = document.getElementById('graficoCategoria{{ forloop.counter }}').getContext('2d');
+        var graficoCategoria{{ forloop.counter }} = new Chart(ctx{{ forloop.counter }}, {
+            type: 'bar',  // Mudamos para 'bar'
             data: {
-                labels: nomesCategorias, // Categorias no eixo X
-                datasets: [
-                    {
-                        label: 'Valor Gasto',
-                        data: valoresGastos, // Dados de valor gasto
-                        backgroundColor: 'rgba(220, 53, 69, 0.7)', // Cor da barra para gasto
-                        borderColor: 'rgba(220, 53, 69, 1)', // Cor da borda da barra
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Saldo Restante',
-                        data: valoresRestantes, // Dados de saldo restante
-                        backgroundColor: 'rgba(0, 123, 255, 0.7)', // Cor da barra para saldo restante
-                        borderColor: 'rgba(0, 123, 255, 1)', // Cor da borda da barra
-                        borderWidth: 1
-                    }
-                ]
+                labels: [''],
+                datasets: [{
+                    label: 'Gasto de {{ reserva.categoria }}',
+                    data: [{{ reserva.valor_gasto }}],  // Gasto atual
+                    backgroundColor: '#5a6268',  // Cor da parte gasta
+                }]
             },
             options: {
                 responsive: true,
+                indexAxis: 'y',  // Configuração para tornar o gráfico horizontal
+                plugins: {
+                    legend: {
+                        display: false,  // Removido a legenda
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                var gasto = tooltipItem.raw;
+                                return 'Gasto Atual: R$ ' + gasto;
+                            }
+                        }
+                    }
+                },
                 scales: {
                     x: {
-                        beginAtZero: true, // Começa a escala no zero
+                        beginAtZero: true,
+                        max: {{ reserva.valor_reservado }},
                         ticks: {
-                            callback: function (value) {
-                                return 'R$ ' + value.toFixed(2); // Formatar as unidades no eixo X
+                            callback: function(value, index, values) {
+                                if (index === 0 || index === values.length - 1) {
+                                    return value;
+                                }
+                                return '';
                             }
+                        },
+                        grid: {
+                            display: false,  // Remove a grade do eixo X
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false,  // Remove a grade do eixo Y
                         }
                     }
                 }
             }
         });
-    </script>
-
-    <script>
-        // Obter os valores de receitas e despesas diretamente do HTML
-        const receitaValor = parseFloat("{{ receitas_mes|floatformat:2 }}".replace(',', '.')) || 0;
-        const despesaValor = parseFloat("{{ despesas_mes|floatformat:2 }}".replace(',', '.')) || 0;
-
-        // Calcular o saldo
-        const saldoTotal = receitaValor - despesaValor;
-
-        // Exibir o saldo calculado no elemento com ID 'saldo-calculado'
-        document.getElementById('saldo-calculado').textContent =
-            `R$ ${saldoTotal.toFixed(2).replace('.', ',')}`;
+        {% endfor %}
     </script>
 </body>
 

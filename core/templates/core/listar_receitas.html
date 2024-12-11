@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,43 +12,79 @@
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>Receitas</h1>
-        </header>
+    <!-- Cabeçalho -->
+    <header class="header-container">
+        <div class="header-content">
+            <a href="/" class="header-logo">
+                <i class="fas fa-piggy-bank"></i>
+            </a>
+
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">Início</a></li>
+                    <li><a href="/listar_receitas" class="nav-link">Receitas</a></li>
+                    <li><a href="/listar_despesas" class="nav-link">Despesas</a></li>
+                    <li><a href="/listar_reservas" class="nav-link">Metas</a></li>
+                </ul>
+            </nav>
+            <a>
+                <form action="{% url 'logout' %}" method="post" class="header-logout">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
+            </a>
+        </div>
+    </header>
+
+
+    <main>
+        <div class="titulo-pagina">
+            <h1>Lista de receitas</h1>
+        </div>
+
+
 
         <!-- Tabela de Receitas -->
-        <div class="bordas-tabela">
-            <table>
-                <thead>
+        <div class="receitas-container">
+            <table class="tabela-receitas">
+                <thead class="cabecalho-receitas">
                     <tr>
-                        <th>Descrição</th>
-                        <th>Valor</th>
-                        <th>Data</th>
+                        <th class="col-descricao">Descrição</th>
+                        <th class="col-valor">Valor</th>
+                        <th class="col-data">Data</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="corpo-receitas">
                     {% for receita in receitas %}
-                        <tr class>
-                            <td class="descricao">{{ receita.descricao }}</td>
-                            <td class="valor">R$ {{ receita.valor|floatformat:2 }}</td>
-                            <td class="data">{{ receita.data }}</td>
-                        </tr>
+                    <tr class="linha-receita">
+                        <td class="col-descricao">{{ receita.descricao }}</td>
+                        <td class="col-valor">R$ {{ receita.valor|floatformat:2 }}</td>
+                        <td class="col-data">{{ receita.data }}</td>
+                    </tr>
                     {% empty %}
-                        <tr>
-                            <td colspan="3" class="no-receitas">Nenhuma receita registrada.</td>
-                        </tr>
+                    <tr>
+                        <td colspan="3" class="mensagem-sem-receitas">Nenhuma receita registrada.</td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+        
+
 
         <!-- Botões para Cadastrar Nova Receita e Voltar à Página Inicial -->
-        <div class="botoes">
-            <a href="{% url 'cadastrar_receita' %}" class="btn-acao">Adicionar Receita</a>
-            
+        <div class="botao-lista">
+            <a href="{% url 'cadastrar_receita' %}" class="botao-acao">Adicionar Receita</a>
+
         </div>
-    </div>
-    
+    </main>
+
+
+    <footer>
+        <p>&copy; 2024 Finanças Pessoais</p>
+    </footer>
 </body>
+
 </html>

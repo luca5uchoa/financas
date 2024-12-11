@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +32,7 @@
 
         h1 {
             text-align: center;
-            color: #091057;
+            color: #3B7FCD;
             margin-bottom: 30px;
         }
 
@@ -42,34 +43,44 @@
 
         .form-group input {
             width: 100%;
-            padding: 8px; /* Diminui o preenchimento */
+            padding: 8px;
+            /* Diminui o preenchimento */
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 14px; /* Diminui o tamanho da fonte */
-            color: #091057;
+            font-size: 14px;
+            /* Diminui o tamanho da fonte */
+            color: #000000;
             background-color: rgba(255, 255, 255, 0.6);
         }
 
         .form-group input:focus {
             border-color: #EC8305;
-            outline: none;
+            
         }
 
         .btn-login {
-            background-color: #091057;
-            color: #DBD3D3;
-            padding: 15px 30px; /* Aumenta o tamanho do botão */
-            border-radius: 50px; /* Deixa o botão mais arredondado */
-            font-size: 18px; /* Aumenta o tamanho da fonte */
+            background-color: #3B7FCD;
+            color: #ffffff;
+            border: none;
+            padding: 15px 30px;
+            /* Aumenta o tamanho do botão */
+            border-radius: 50px;
+            /* Deixa o botão mais arredondado */
+            font-size: 18px;
+            /* Aumenta o tamanho da fonte */
             cursor: pointer;
             text-align: center;
-            width: 100%; /* Faz o botão ocupar toda a largura disponível */
+            width: 100%;
+            /* Faz o botão ocupar toda a largura disponível */
             transition: background-color 0.3s ease, transform 0.3s ease;
+            outline: none;
         }
 
         .btn-login:hover {
             background-color: #EC8305;
             transform: scale(1.05);
+            outline: none;
+            border: none;
         }
 
         .error-message {
@@ -80,56 +91,20 @@
 
         /* Rodapé fixo */
         footer {
+            background-color: #3B7FCD;
+            color: #fff;
+            text-align: center;
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: #091057;
-            color: #DBD3D3;
-            padding: 20px 40px;
+            padding: 10px 20px;
             text-align: center;
-            box-sizing: border-box; /* Inclui padding nas dimensões totais */
-        }
-
-        footer .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte, se necessário */
-        }
-
-        footer .footer-links {
-            display: flex;
-            gap: 20px;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            flex-wrap: wrap; /* Permite que os itens da lista quebrem linha se necessário */
-        }
-
-        footer .footer-links li {
-            display: inline-block;
-        }
-
-        footer .footer-links a {
-            color: #EC8305;
-            text-decoration: none;
-            font-size: 20px;
-        }
-
-        footer .footer-links a:hover {
-            color: #024CAA;
-            text-decoration: underline;
-        }
-
-        footer .footer-text p {
-            white-space: nowrap; /* Impede que o texto quebre em várias linhas */
-            overflow: hidden; /* Impede que o texto ultrapasse o limite */
-            text-overflow: ellipsis; /* Adiciona "..." caso o texto ultrapasse o limite */
+            margin-top: 50px;
         }
     </style>
 </head>
+
 <body>
 
     <div class="login-container">
@@ -148,29 +123,14 @@
         </form>
 
         {% if form.errors %}
-            <p class="error-message">Usuário ou senha inválidos. Tente novamente.</p>
+        <p class="error-message">Usuário ou senha inválidos. Tente novamente.</p>
         {% endif %}
     </div>
 
     <footer>
-        <div class="footer-content">
-            <!-- Texto do Rodapé -->
-            <div class="footer-text">
-                <p>Finanças Pessoais &copy; 2024</p>
-            </div>
-    
-            <!-- Links com os ícones de redes sociais -->
-            <ul class="footer-links">
-                <li><a href="https://www.instagram.com/seu_usuario" target="_blank">
-                    <i class="fab fa-instagram"></i> 
-                </a></li>
-                <li><a href="https://twitter.com/seu_usuario" target="_blank">
-                    <i class="fab fa-twitter"></i> 
-                </a></li>
-                <li><a href="https://www.google.com">Políticas de privacidade</a></li>
-            </ul>
-        </div>
+        <p>&copy; 2024 Finanças Pessoais</p>
     </footer>
 
 </body>
+
 </html>
