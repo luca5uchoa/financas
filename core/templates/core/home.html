@@ -73,29 +73,24 @@
         </div>
 
         <!-- Seção de gráficos individuais de reserva por categoria -->
-        <section class="section-graficos-individuais">
-            <h2>Gráficos de Reservas por Categoria</h2>
-            <div class="grafico-container">
-                {% for reserva in reservas_por_categoria %}
+        <div class="contorno-grafico">
+            <section class="grafico-categoria">
+
+                <div class="grafico-container">
+                    {% for reserva in reservas_por_categoria %}
                     <div class="grafico-categoria">
                         <h3>{{ reserva.categoria }}</h3>
-                        <canvas id="graficoCategoria{{ forloop.counter }}" style="width: 100%; height: 100px; padding: 20px;"></canvas>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
+                        <canvas id="graficoCategoria{{ forloop.counter }}" style="width: 100%; height: 30px;"></canvas>
+                        <div class="legenda-grafico">
+                            <p>R$ {{ reserva.valor_gasto|floatformat:2 }} de R$ {{ reserva.valor_reservado|floatformat:2}}</p>
+                            <p>Faltam R$ {{ reserva.saldo_restante|floatformat:2 }} </p>
+                        </div>
 
-        <!-- Seção de lista de reservas por categoria -->
-        <section class="section-reservas-categorias">
-            <h3>Reservas por Categoria</h3>
-            <ul class="categorias-lista">
-                {% for reserva in reservas_por_categoria %}
-                    <li>
-                        <p>{{ reserva.categoria }}: R$ {{ reserva.saldo_restante|floatformat:2 }} (Gasto: R$ {{ reserva.valor_gasto|floatformat:2 }} / Reservado: R$ {{ reserva.valor_reservado|floatformat:2 }})</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        </section>
+                        {% endfor %}
+                    </div>
+            </section>
+        </div>
+
 
     </main>
 
@@ -112,47 +107,64 @@
                 labels: [''],
                 datasets: [{
                     label: 'Gasto de {{ reserva.categoria }}',
-                    data: [{{ reserva.valor_gasto }}],  // Gasto atual
-                    backgroundColor: '#5a6268',  // Cor da parte gasta
-                }]
-            },
+                    data: [{{ reserva.valor_gasto }}],
+                borderWidth: 0,  // Remove a borda da barra
+                backgroundColor: '#3B7FCD',
+                barThickness: 20,  // Define uma espessura fixa para as barras
+            }]
+        },
             options: {
-                responsive: true,
-                indexAxis: 'y',  // Configuração para tornar o gráfico horizontal
-                plugins: {
-                    legend: {
-                        display: false,  // Removido a legenda
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                var gasto = tooltipItem.raw;
-                                return 'Gasto Atual: R$ ' + gasto;
-                            }
-                        }
-                    }
+            responsive: true,
+            indexAxis: 'y',  // Configuração para tornar o gráfico horizontal
+            layout: {
+                padding: {
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0
+                }
+            },
+
+            plugins: {
+                legend: {
+                    display: false,  // Removido a legenda
                 },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        max: {{ reserva.valor_reservado }},
-                        ticks: {
-                            callback: function(value, index, values) {
-                                if (index === 0 || index === values.length - 1) {
-                                    return value;
-                                }
-                                return '';
-                            }
-                        },
-                        grid: {
-                            display: false,  // Remove a grade do eixo X
-                        }
-                    },
-                    y: {
-                        grid: {
-                            display: false,  // Remove a grade do eixo Y
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            var gasto = tooltipItem.raw;
+                            return 'Gasto Atual: R$ ' + gasto;
                         }
                     }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: {{ reserva.valor_reservado }},
+            ticks: {
+            display: false,
+            drawBorder: false,  // Remove a linha lateral do eixo Y (opcional)
+
+            callback: function (value, index, values) {
+                if (index === 0 || index === values.length - 1) {
+                    return value;
+                }
+                return '';
+            }
+        },
+            grid: {
+            display: false,  // Remove a grade do eixo X
+            drawBorder: false,
+        }
+                    },
+
+            y: {
+            grid: {
+                display: false,  // Remove a grade do eixo Y
+                drawBorder: false,  // Remove a linha lateral do eixo Y (opcional)
+            }
+        }
                 }
             }
         });

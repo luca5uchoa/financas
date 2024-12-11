@@ -109,9 +109,9 @@ body {
     display: flex;
     text-align: center;
     flex-direction: column;
-    padding: 40px;
+    padding: 30px;
     box-shadow: 0 4px 8px rgba(9, 102, 223, 0.1); /* Horizontal, Vertical, Difusão, Cor */
-    margin-top: 50px;
+    margin-top: 20px;
 }
 .section-saldo h2{
     color: #767676;
@@ -302,11 +302,14 @@ flex-direction: column;
     display: flex;
     justify-content: space-between;
     text-align: left;
+    margin-left: 20px;
+    padding-right: 20px;
+    margin-top: 0;
         
 }
 
 .legenda-grafico p{
-    margin-top: 10px;
+    
     text-align: left; /* Força o alinhamento do texto à esquerda caso necessário */
     font-weight: lighter;
     color: #767676;
@@ -784,7 +787,36 @@ text-align: center;
 .btn-cancelar:active {
     background-color: #343a40; /* Tom ainda mais escuro para clique */
 }
+/*---------------------------------------------------------------*/
 
-.section-grafico{
+.caixa-resumo{
+    display: flex;
+    justify-content: flex-end; /* Alinha ao lado esquerdo */
+    align-items: flex-start; /* Alinha no topo */
+    min-height: 100vh; /* Garante que o contêiner ocupe a altura total da tela */
+    padding: 20px; /* Espaçamento interno para evitar o contato com a borda */
+
+}
+.section-reservas-categorias {
+    flex: 0 0 auto; /* Evita que a seção redimensione automaticamente */
+    width: 500px; /* Largura fixa para a seção */
+    background-color: #f9f9f9; /* Cor de fundo para destaque */
+    border: 1px solid #ddd; /* Borda para separar visualmente */
     padding: 20px;
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.section-reservas-categorias p{
+    font-size: .8rem;
+}
+
+.contorno-grafico{
+    background-color: #F5F5F5;
+    margin-top: 50px;
+}
+
+.grafico-categoria h3{
+    margin-left: 15px;
+    margin-top: 10px;
 }
