@@ -15,7 +15,6 @@
 </head>
 
 <body>
-    <!-- Cabeçalho -->
     <header class="header-container">
         <div class="header-content">
             <a href="/" class="header-logo">
@@ -30,16 +29,33 @@
                     <li><a href="/listar_reservas" class="nav-link">Metas</a></li>
                 </ul>
             </nav>
-            <a>
-                <form action="{% url 'logout' %}" method="post" class="header-logout">
-                    {% csrf_token %}
-                    <button type="submit" class="logout-button">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </form>
-            </a>
+
+            <!-- Botão de logout -->
+            <form action="{% url 'logout' %}" method="post" class="header-logout">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </form>
+
+            <!-- Menu Hambúrguer -->
+            <div class="menu-hamburguer" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </header>
+
+    <!-- Lista de navegação para dispositivos móveis -->
+    <nav class="nav-list-mobile" id="mobileMenu">
+        <ul>
+            <li><a href="/" class="nav-link">Início</a></li>
+            <li><a href="/listar_receitas" class="nav-link">Receitas</a></li>
+            <li><a href="/listar_despesas" class="nav-link">Despesas</a></li>
+            <li><a href="/listar_reservas" class="nav-link">Metas</a></li>
+        </ul>
+    </nav>
 
     <main>
         <!-- Seção de saldo -->
@@ -169,6 +185,12 @@
             }
         });
         {% endfor %}
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('show');
+        }
     </script>
 </body>
 

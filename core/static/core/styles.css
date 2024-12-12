@@ -15,16 +15,17 @@ body {
 
 
 /* Cabeçalho Geral */
+/* Cabeçalho Geral */
 .header-container {
     background-color: #3B7FCD;
     padding: 10px 20px;
     border-bottom: 2px solid #ddd;
 
     position: sticky;
-    top: 0; /* Mantém o cabeçalho colado no topo */
-    width: 100%; /* Faz o cabeçalho ocupar toda a largura da tela */
-    z-index: 1000; /* Garante que o cabeçalho esteja sempre acima de outros elementos */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra para destaque */
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
@@ -32,6 +33,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
+    width: 100%;
 }
 
 /* Logo */
@@ -49,13 +51,9 @@ body {
 
 /* Navegação */
 .header-nav {
-    position: absolute;
-    left: 50%; /* Move a nav para o centro da página */
-    transform: translateX(-50%); /* Ajusta o elemento para garantir que esteja centrado */
     display: flex;
     justify-content: center;
     width: 100%;
-    
 }
 
 .nav-list {
@@ -71,35 +69,86 @@ body {
     text-decoration: none;
     font-size: 1rem;
     transition: color 0.3s, text-decoration 0.3s;
-    
 }
+
 
 .nav-link:hover {
     color: #000000;
     background-color: #00000028;
     border-radius: 4px;
-    
 }
 
 /* Botão de Logout */
-
-
 .logout-button {
     background-color: #3B7FCD;
     color: #fffefe;
-    border-radius: 3px;  /* Arredondando as bordas */
+    border-radius: 3px;
     font-size: 0.9rem;
     cursor: pointer;
-    border: none; /* Sem borda */
+    border: none;
     font-size: 2rem;
-    
-    
 }
 
 .logout-button:hover {
-    
     color: #000000;
 }
+
+/* Menu Hamburguer */
+.menu-hamburguer {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-hamburguer div {
+    width: 25px;
+    height: 3px;
+    background-color: #fffefe;
+    margin: 4px 0;
+}
+
+/* Estilo do menu em telas pequenas */
+.nav-list-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #3b7fcda9;
+    padding: 20px;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 200px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Mostrar a lista de navegação em dispositivos pequenos quando o menu hambúrguer é clicado */
+.nav-list-mobile.show {
+    display: flex;
+}
+
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    .header-nav {
+        display: none;
+    }
+
+    .menu-hamburguer {
+        display: flex;
+    }
+    .header-content {
+        justify-content: space-between;
+    }
+
+    .logout-button {
+        display: flex;
+        justify-content: flex-end;
+        
+    }
+}
+
 
 /* --------------------------------------------------*/
 
@@ -131,32 +180,37 @@ body {
 
 
 /* --------------------------------------------------*/
-/* Seção de receitas e despesas */
 
-.section-caixas{
+/* Seção de receitas e despesas */
+.section-caixas {
     display: flex;
     justify-content: space-between;
     padding: 10px;
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 20px;
+    flex-wrap: wrap; /* Permite que as caixas se reorganizem em telas menores */
 }
+
 /*-----------------------------------------------------------*/
+/* Estilo do card de receita */
 .caixa-receita {
     border: #19191a;
     background-color: #F5F5F5;
-    padding: 40px;
+    padding: 20px; /* Reduzido para menor espaçamento */
     width: 45%;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(18, 143, 45, 0.1); /* Horizontal, Vertical, Difusão, Cor */
     display: flex;
     align-items: center; /* Alinha o ícone, título e valor verticalmente */
-    justify-content: center;
-    
+    justify-content: center; /* Alinha o conteúdo ao lado do ícone */
+    min-height: 140px; /* Altura reduzida para o card */
+    box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
+    transition: all 0.3s ease; /* Transição suave para ajustes de tamanho */
 }
 
 .icone-receita {
-    font-size: 4rem; /* Tamanho do ícone */
+    font-size: 3rem; /* Reduzido o tamanho do ícone */
     color: #070707; /* Cor do ícone */
     margin-right: 15px; /* Espaço entre o ícone e o conteúdo */
 }
@@ -165,33 +219,40 @@ body {
     display: flex;
     flex-direction: column; /* Organiza título e valor em coluna */
     justify-content: center; /* Alinha o texto ao centro */
+    text-align: left; /* Alinha o texto à esquerda */
 }
 
- .caixa-receita h3{
+.caixa-receita h3 {
     color: #1E1E1E;
     font-weight: lighter;
- }
- .caixa-receita p{
+    margin: 0;
+}
+
+.caixa-receita p {
     color: #0a6328;
     font-weight: normal;
-    font-size: 2.5rem;
- }
+    font-size: 2rem; /* Ajustado o tamanho da fonte */
+}
+
 /*------------------------------------------------------*/
- .caixa-despesa {
+/* Estilo do card de despesa */
+.caixa-despesa {
     border: #19191a;
     background-color: #F5F5F5;
-    padding: 40px;
+    padding: 20px; /* Reduzido para menor espaçamento */
     width: 45%;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(250, 1, 1, 0.1); /* Horizontal, Vertical, Difusão, Cor */
     display: flex;
     align-items: center; /* Alinha o ícone, título e valor verticalmente */
-    justify-content: center;
-    
+    justify-content: center; /* Alinha o conteúdo ao lado do ícone */
+    min-height: 140px; /* Altura reduzida para o card */
+    box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
+    transition: all 0.3s ease; /* Transição suave para ajustes de tamanho */
 }
 
 .icone-despesa {
-    font-size: 4rem; /* Tamanho do ícone */
+    font-size: 3rem; /* Reduzido o tamanho do ícone */
     color: #070707; /* Cor do ícone */
     margin-right: 15px; /* Espaço entre o ícone e o conteúdo */
 }
@@ -200,74 +261,100 @@ body {
     display: flex;
     flex-direction: column; /* Organiza título e valor em coluna */
     justify-content: center; /* Alinha o texto ao centro */
+    text-align: left; /* Alinha o texto à esquerda */
 }
 
-.caixa-despesa h3{
+.caixa-despesa h3 {
     color: #1E1E1E;
     font-weight: lighter;
- }
- .caixa-despesa p{
+    margin: 0;
+}
+
+.caixa-despesa p {
     color: #F11A1A;
     font-weight: normal;
-    font-size: 2.5rem;
- }
-/*---------------------------*/
+    font-size: 2rem; /* Ajustado o tamanho da fonte */
+}
 
-.botoes-rec-desp{
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    .section-caixas {
+        flex-direction: column; /* Organiza as caixas em coluna em telas pequenas */
+    }
+
+    .caixa-receita, .caixa-despesa {
+        width: 100%; /* Garante que os cards ocupem toda a largura disponível */
+        margin-bottom: 15px; /* Espaçamento entre os cards */
+    }
+
+    .caixa-receita h3, .caixa-despesa h3 {
+        font-size: 1.5rem; /* Ajusta o tamanho do título em telas menores */
+    }
+
+    .caixa-receita p, .caixa-despesa p {
+        font-size: 1.8rem; /* Ajusta o tamanho do valor em telas menores */
+    }
+
+    .icone-receita, .icone-despesa {
+        font-size: 3rem; /* Reduz o tamanho do ícone em telas pequenas */
+    }
+}
+
+/* Botões de receitas e despesas */
+.botoes-rec-desp {
     display: flex;
     justify-content: space-between;
     padding: 10px;
     margin-left: 50px;
     margin-right: 50px;
-    margin-top: 1px
-
+    margin-top: 1px;
 }
 
-.btn-rec{
+.btn-rec {
     background-color: #0769302f; /* Cor cinza */
     color: #fff;
-    border-radius: 3px;  /* Arredondando as bordas */
+    border-radius: 3px; /* Arredondando as bordas */
     font-size: 0.9rem;
     text-decoration: none;
     width: 45%;
     text-align: center;
-    
-}
-.btn-rec:hover {
-    background-color: #076930; /* Cor cinza */
-    
+    padding: 10px;
 }
 
-.btn-desp{
+.btn-rec:hover {
+    background-color: #076930; /* Cor cinza */
+}
+
+.btn-desp {
     background-color: #6907072f; /* Cor cinza */
     color: #fff;
-    border-radius: 3px;  /* Arredondando as bordas */
+    border-radius: 3px; /* Arredondando as bordas */
     font-size: 0.9rem;
     text-decoration: none;
     width: 45%;
     text-align: center;
-    
+    padding: 10px;
 }
+
 .btn-desp:hover {
     background-color: #690707dc; /* Cor cinza */
-    
 }
-/*---------------------------*/
-.header-saldo-categorias{
+
+/* Cabeçalho de saldo e categorias */
+.header-saldo-categorias {
     display: flex;
     justify-content: space-between;
     margin-left: 10px;
     margin-right: 10px;
 }
 
-.header-saldo-categorias h3{
+.header-saldo-categorias h3 {
     color: #3a3a3a;
     font-size: 1.5rem;
     margin-top: 40px;
     font-weight: lighter;
 }
 
-/*---------------------------*/
 
 .section-saldo-categorias{
 background-color: #F5F5F5;
@@ -316,10 +403,7 @@ flex-direction: column;
 }
 
 /*---------------------------*/
-.espaco-branco{
-    background-color: #F5F5F5;
-    height: 20px;
-}
+
 
 footer {
     background-color: #3B7FCD;
@@ -334,36 +418,20 @@ footer {
 }
 
 /*------------------------------------------------------*/
-.titulo-pagina{
-margin-top: 130px;
-padding: 20px;
-text-align: center;
-
+/* Estilos Gerais */
+.titulo-pagina {
+    padding: 30px;
+    text-align: center;
 }
+
 /*---------------------------------------------------------------*/
 
 /* Contêiner geral da tabela */
 .receitas-container {
     padding: 20px;
-    margin: 0 auto; /* Centraliza o contêiner horizontalmente */
-    max-width: calc(100% - 300px); /* Garante margem mínima de 150px dos lados */
-    box-sizing: border-box; /* Inclui o padding no cálculo do tamanho total */
-}
-
-/* Tabela de receitas */
-.tabela-receitas {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-
-/* Contêiner geral da tabela */
-.receitas-container {
-    padding: 20px;
-    margin: 0 auto; /* Centraliza o contêiner horizontalmente */
-    max-width: calc(100% - 300px); /* Garante margem mínima de 150px dos lados */
-    box-sizing: border-box; /* Inclui o padding no cálculo do tamanho total */
+    margin: 0 auto;
+    max-width: 90%; /* Reduz a largura máxima em dispositivos móveis */
+    box-sizing: border-box;
 }
 
 /* Tabela de receitas */
@@ -377,64 +445,32 @@ text-align: center;
 .cabecalho-receitas th {
     background-color: transparent;
     color: #000;
-    text-align: left; /* Alinha o cabeçalho à esquerda */
+    text-align: left;
     font-weight: bold;
     padding: 12px;
 }
 
 .cabecalho-receitas .col-valor {
-    text-align: right; /* Alinha os valores à direita */
+    text-align: right;
 }
 
 .cabecalho-receitas .col-data {
-    text-align: center; /* Centraliza o cabeçalho da coluna de data */
-}
-
-/* Ajustando a largura das colunas */
-.col-descricao {
-    width: 50%; /* A coluna "Descrição" ocupa metade da tabela */
-}
-
-.col-valor {
-    width: 15%; /* A coluna "Valor" ocupa 15% da tabela */
-}
-
-.col-data {
-    width: 10%; /* A coluna "Data" ocupa 10% da tabela */
+    text-align: center;
 }
 
 /* Corpo da tabela */
 .corpo-receitas td {
     padding: 12px;
     vertical-align: middle;
-    word-wrap: break-word; /* Quebra o texto longo em várias linhas */
+    word-wrap: break-word;
 }
 
-/* Alinhamento personalizado para as colunas */
-.col-descricao {
-    text-align: left; /* Alinha texto à esquerda */
-}
-
-.col-valor {
-    text-align: right; /* Alinha valores à direita */
-}
-
-.col-data {
-    text-align: center; /* Centraliza as datas */
-}
-
-/* Fundo das linhas do corpo da tabela */
 .corpo-receitas tr:nth-child(even) {
-    background-color: #f9f9f9; /* Alterna com fundo cinza claro */
+    background-color: #f9f9f9;
 }
 
 .corpo-receitas tr:nth-child(odd) {
-    background-color: #fdfdfd; /* Fundo branco */
-}
-
-/* Linha de receita */
-.linha-receita td {
-    border: none; /* Remove bordas entre células */
+    background-color: #fdfdfd;
 }
 
 /* Mensagem de "sem receitas" */
@@ -446,32 +482,75 @@ text-align: center;
     padding: 12px;
 }
 
-
-/*---------------------------------------------------------------*/
 /* Botão para adicionar receita */
 .botao-lista {
     display: flex;
-    justify-content: center; /* Posiciona o botão à direita */
-    margin: 20px; /* Adiciona margem ao redor */
-    
+    justify-content: center;
+    margin: 20px;
 }
 
 .botao-acao {
-    text-decoration: none; /* Remove sublinhado do link */
-    background-color: #256ab9; /* Cor de fundo do botão */
-    color: #fff; /* Cor do texto */
-    padding: 10px 20px; /* Espaçamento interno */
-    border-radius: 5px; /* Arredonda as bordas */
+    text-decoration: none;
+    background-color: #256ab9;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
     font-size: 16px;
     font-weight: bold;
-    transition: background-color 0.3s ease; /* Efeito de transição ao passar o mouse */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .botao-acao:hover {
-    background-color: #1f5e9e; /* Cor ao passar o mouse */
+    background-color: #1f5e9e;
     color: #666565;
+}
+
+/*---------------------------------------------------------------*/
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .receitas-container {
+        max-width: 100%; /* Ajusta largura para dispositivos menores */
+    }
+
+    .tabela-receitas {
+        font-size: 14px; /* Reduz tamanho da fonte */
+    }
+
+    .cabecalho-receitas th {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .corpo-receitas td {
+        padding: 8px;
+    }
+
+    /* Reorganiza as colunas para mobile */
+    .tabela-receitas {
+        display: block;
+    }
+
+    .corpo-receitas tr {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .corpo-receitas td {
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .botao-lista {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 /*---------------------------------------------------------------*/
@@ -699,11 +778,7 @@ text-align: center;
     cursor: not-allowed; /* Cursor indicando que não é clicável */
 }
 
-/* Estilo para o contêiner geral da página */
-.titulo-pagina {
-    text-align: center;
-    margin-bottom: 20px;
-}
+
 
 /* Estilo para o formulário */
 .form {
