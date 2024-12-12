@@ -25,16 +25,31 @@
                     <li><a href="/listar_reservas" class="nav-link">Metas</a></li>
                 </ul>
             </nav>
-            <a>
-                <form action="{% url 'logout' %}" method="post" class="header-logout">
-                    {% csrf_token %}
-                    <button type="submit" class="logout-button">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </form>
-            </a>
+
+            <!-- Botão de logout -->
+            <form action="{% url 'logout' %}" method="post" class="header-logout">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </form>
+
+            <!-- Menu Hambúrguer -->
+            <div class="menu-hamburguer" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </header>
+    <nav class="nav-list-mobile" id="mobileMenu">
+        <ul>
+            <li><a href="/" class="nav-link">Início</a></li>
+            <li><a href="/listar_receitas" class="nav-link">Receitas</a></li>
+            <li><a href="/listar_despesas" class="nav-link">Despesas</a></li>
+            <li><a href="/listar_reservas" class="nav-link">Metas</a></li>
+        </ul>
+    </nav>
     <main>
          <!-- Título da Página -->
          <div class="titulo-pagina">
@@ -58,5 +73,12 @@
     <footer>
         <p>&copy; 2024 Finanças Pessoais</p>
     </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('show');
+        }
+    </script>
 </body>
 </html>

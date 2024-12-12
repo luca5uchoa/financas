@@ -1,5 +1,14 @@
 /* Estilos gerais */
-body, h1, h2, h3, p, div, nav, footer, header, button {
+body,
+h1,
+h2,
+h3,
+p,
+div,
+nav,
+footer,
+header,
+button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -20,7 +29,6 @@ body {
     background-color: #3B7FCD;
     padding: 10px 20px;
     border-bottom: 2px solid #ddd;
-
     position: sticky;
     top: 0;
     width: 100%;
@@ -71,7 +79,6 @@ body {
     transition: color 0.3s, text-decoration 0.3s;
 }
 
-
 .nav-link:hover {
     color: #000000;
     background-color: #00000028;
@@ -93,9 +100,10 @@ body {
     color: #000000;
 }
 
-/* Menu Hamburguer */
+/* Menu Hambúrguer */
+/* Menu Hambúrguer */
 .menu-hamburguer {
-    display: none;
+    display: none;  /* Esconde o hambúrguer por padrão */
     flex-direction: column;
     cursor: pointer;
     padding: 10px;
@@ -116,8 +124,9 @@ body {
     background-color: #3b7fcda9;
     padding: 20px;
     position: absolute;
-    top: 60px;
-    right: 20px;
+    top: 60px;   /* Coloca o menu abaixo do botão */
+    left: 50%;   /* Centraliza o menu horizontalmente */
+    transform: translateX(-50%); /* Ajusta o deslocamento para centralizar */
     width: 200px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -125,57 +134,81 @@ body {
 
 /* Mostrar a lista de navegação em dispositivos pequenos quando o menu hambúrguer é clicado */
 .nav-list-mobile.show {
-    display: flex;
+    display: flex;  /* Exibe o menu quando a classe 'show' for adicionada */
 }
-
 
 /* Responsividade para telas pequenas */
 @media (max-width: 768px) {
     .header-nav {
-        display: none;
+        display: none;  /* Esconde o menu de navegação tradicional */
     }
 
     .menu-hamburguer {
-        display: flex;
+        display: flex;  /* Exibe o menu hambúrguer */
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);  /* Alinha o hambúrguer no centro da tela */
     }
+
     .header-content {
-        justify-content: space-between;
+        justify-content: space-between;  /* Organiza os itens na header */
+    }
+
+    /* Logout à direita */
+    .header-logout {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     .logout-button {
-        display: flex;
-        justify-content: flex-end;
-        
+        font-size: 1.5rem;
+        color: #fffefe;
+        background-color: transparent;
+    }
+}
+
+@media (min-width: 769px) {
+    /* Versão Desktop */
+    .menu-hamburguer{
+        display: none;  /* Esconde o hambúrguer e o logout na versão desktop */
     }
 }
 
 
-/* --------------------------------------------------*/
 
 /* Seção do saldo */
-.section-saldo{
+.section-saldo {
     background-color: #F5F5F5;
     display: flex;
     text-align: center;
     flex-direction: column;
     padding: 30px;
-    box-shadow: 0 4px 8px rgba(9, 102, 223, 0.1); /* Horizontal, Vertical, Difusão, Cor */
+    box-shadow: 0 4px 8px rgba(9, 102, 223, 0.1);
+    /* Horizontal, Vertical, Difusão, Cor */
     margin-top: 20px;
 }
-.section-saldo h2{
+
+.section-saldo h2 {
     color: #767676;
     font-size: 2.2rem;
     font-weight: normal;
-    margin-bottom: 0; /* Remove qualquer margem inferior */
-    line-height: 1.5; /* Ajusta o espaçamento entre linhas do h2 */
-    
+    margin-bottom: 0;
+    /* Remove qualquer margem inferior */
+    line-height: 1.5;
+    /* Ajusta o espaçamento entre linhas do h2 */
+
 }
-.section-saldo p{
+
+.section-saldo p {
     color: #000000;
     font-size: 3rem;
     font-weight: bold;
-    margin-top: 0; /* Remove a margem superior do <p> */
-    line-height: 0.8; /* Ajusta o espaçamento entre linhas do <p> */
+    margin-top: 0;
+    /* Remove a margem superior do <p> */
+    line-height: 0.8;
+    /* Ajusta o espaçamento entre linhas do <p> */
 }
 
 
@@ -189,7 +222,8 @@ body {
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 20px;
-    flex-wrap: wrap; /* Permite que as caixas se reorganizem em telas menores */
+    flex-wrap: wrap;
+    /* Permite que as caixas se reorganizem em telas menores */
 }
 
 /*-----------------------------------------------------------*/
@@ -197,29 +231,42 @@ body {
 .caixa-receita {
     border: #19191a;
     background-color: #F5F5F5;
-    padding: 20px; /* Reduzido para menor espaçamento */
+    padding: 20px;
+    /* Reduzido para menor espaçamento */
     width: 45%;
     border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(18, 143, 45, 0.1); /* Horizontal, Vertical, Difusão, Cor */
+    box-shadow: 0 4px 8px rgba(18, 143, 45, 0.1);
+    /* Horizontal, Vertical, Difusão, Cor */
     display: flex;
-    align-items: center; /* Alinha o ícone, título e valor verticalmente */
-    justify-content: center; /* Alinha o conteúdo ao lado do ícone */
-    min-height: 140px; /* Altura reduzida para o card */
-    box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
-    transition: all 0.3s ease; /* Transição suave para ajustes de tamanho */
+    align-items: center;
+    /* Alinha o ícone, título e valor verticalmente */
+    justify-content: center;
+    /* Alinha o conteúdo ao lado do ícone */
+    min-height: 140px;
+    /* Altura reduzida para o card */
+    box-sizing: border-box;
+    /* Inclui padding e bordas no cálculo da largura */
+    transition: all 0.3s ease;
+    /* Transição suave para ajustes de tamanho */
 }
 
 .icone-receita {
-    font-size: 3rem; /* Reduzido o tamanho do ícone */
-    color: #070707; /* Cor do ícone */
-    margin-right: 15px; /* Espaço entre o ícone e o conteúdo */
+    font-size: 2.5rem;
+    /* Reduzido o tamanho do ícone */
+    color: #070707;
+    /* Cor do ícone */
+    margin-right: 15px;
+    /* Espaço entre o ícone e o conteúdo */
 }
 
 .conteudo-receita {
     display: flex;
-    flex-direction: column; /* Organiza título e valor em coluna */
-    justify-content: center; /* Alinha o texto ao centro */
-    text-align: left; /* Alinha o texto à esquerda */
+    flex-direction: column;
+    /* Organiza título e valor em coluna */
+    justify-content: center;
+    /* Alinha o texto ao centro */
+    text-align: left;
+    /* Alinha o texto à esquerda */
 }
 
 .caixa-receita h3 {
@@ -231,7 +278,8 @@ body {
 .caixa-receita p {
     color: #0a6328;
     font-weight: normal;
-    font-size: 2rem; /* Ajustado o tamanho da fonte */
+    font-size: 1.7rem;
+    /* Ajustado o tamanho da fonte */
 }
 
 /*------------------------------------------------------*/
@@ -239,29 +287,42 @@ body {
 .caixa-despesa {
     border: #19191a;
     background-color: #F5F5F5;
-    padding: 20px; /* Reduzido para menor espaçamento */
+    padding: 20px;
+    /* Reduzido para menor espaçamento */
     width: 45%;
     border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(250, 1, 1, 0.1); /* Horizontal, Vertical, Difusão, Cor */
+    box-shadow: 0 4px 8px rgba(250, 1, 1, 0.1);
+    /* Horizontal, Vertical, Difusão, Cor */
     display: flex;
-    align-items: center; /* Alinha o ícone, título e valor verticalmente */
-    justify-content: center; /* Alinha o conteúdo ao lado do ícone */
-    min-height: 140px; /* Altura reduzida para o card */
-    box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
-    transition: all 0.3s ease; /* Transição suave para ajustes de tamanho */
+    align-items: center;
+    /* Alinha o ícone, título e valor verticalmente */
+    justify-content: center;
+    /* Alinha o conteúdo ao lado do ícone */
+    min-height: 140px;
+    /* Altura reduzida para o card */
+    box-sizing: border-box;
+    /* Inclui padding e bordas no cálculo da largura */
+    transition: all 0.3s ease;
+    /* Transição suave para ajustes de tamanho */
 }
 
 .icone-despesa {
-    font-size: 3rem; /* Reduzido o tamanho do ícone */
-    color: #070707; /* Cor do ícone */
-    margin-right: 15px; /* Espaço entre o ícone e o conteúdo */
+    font-size: 2.5rem;
+    /* Reduzido o tamanho do ícone */
+    color: #070707;
+    /* Cor do ícone */
+    margin-right: 15px;
+    /* Espaço entre o ícone e o conteúdo */
 }
 
 .conteudo-despesa {
     display: flex;
-    flex-direction: column; /* Organiza título e valor em coluna */
-    justify-content: center; /* Alinha o texto ao centro */
-    text-align: left; /* Alinha o texto à esquerda */
+    flex-direction: column;
+    /* Organiza título e valor em coluna */
+    justify-content: center;
+    /* Alinha o texto ao centro */
+    text-align: left;
+    /* Alinha o texto à esquerda */
 }
 
 .caixa-despesa h3 {
@@ -273,30 +334,47 @@ body {
 .caixa-despesa p {
     color: #F11A1A;
     font-weight: normal;
-    font-size: 2rem; /* Ajustado o tamanho da fonte */
+    font-size: 1.7rem;
+    /* Ajustado o tamanho da fonte */
 }
 
 /* Responsividade */
 @media screen and (max-width: 768px) {
     .section-caixas {
-        flex-direction: column; /* Organiza as caixas em coluna em telas pequenas */
+        display: flex;
+        justify-content: space-between;
+        transform: scale(0.9);
+        /* Reduz escala sem alterar a estrutura */
+        /* Organiza as caixas em coluna em telas pequenas */
+        margin-left: 0;
+        margin-right: 0;
     }
 
-    .caixa-receita, .caixa-despesa {
-        width: 100%; /* Garante que os cards ocupem toda a largura disponível */
-        margin-bottom: 15px; /* Espaçamento entre os cards */
+    .caixa-receita,
+    .caixa-despesa {
+        width: 50%;
+        /* Garante que os cards ocupem toda a largura disponível */
+        margin-bottom: 15px;
+        /* Espaçamento entre os cards */
+        
     }
 
-    .caixa-receita h3, .caixa-despesa h3 {
-        font-size: 1.5rem; /* Ajusta o tamanho do título em telas menores */
+    .caixa-receita h3,
+    .caixa-despesa h3 {
+        font-size: 1.5rem;
+        /* Ajusta o tamanho do título em telas menores */
     }
 
-    .caixa-receita p, .caixa-despesa p {
-        font-size: 1.8rem; /* Ajusta o tamanho do valor em telas menores */
+    .caixa-receita p,
+    .caixa-despesa p {
+        font-size: 1.8rem;
+        /* Ajusta o tamanho do valor em telas menores */
     }
 
-    .icone-receita, .icone-despesa {
-        font-size: 3rem; /* Reduz o tamanho do ícone em telas pequenas */
+    .icone-receita,
+    .icone-despesa {
+        font-size: 3rem;
+        /* Reduz o tamanho do ícone em telas pequenas */
     }
 }
 
@@ -311,9 +389,11 @@ body {
 }
 
 .btn-rec {
-    background-color: #0769302f; /* Cor cinza */
+    background-color: #0769302f;
+    /* Cor cinza */
     color: #fff;
-    border-radius: 3px; /* Arredondando as bordas */
+    border-radius: 3px;
+    /* Arredondando as bordas */
     font-size: 0.9rem;
     text-decoration: none;
     width: 45%;
@@ -322,13 +402,16 @@ body {
 }
 
 .btn-rec:hover {
-    background-color: #076930; /* Cor cinza */
+    background-color: #076930;
+    /* Cor cinza */
 }
 
 .btn-desp {
-    background-color: #6907072f; /* Cor cinza */
+    background-color: #6907072f;
+    /* Cor cinza */
     color: #fff;
-    border-radius: 3px; /* Arredondando as bordas */
+    border-radius: 3px;
+    /* Arredondando as bordas */
     font-size: 0.9rem;
     text-decoration: none;
     width: 45%;
@@ -337,7 +420,8 @@ body {
 }
 
 .btn-desp:hover {
-    background-color: #690707dc; /* Cor cinza */
+    background-color: #690707dc;
+    /* Cor cinza */
 }
 
 /* Cabeçalho de saldo e categorias */
@@ -356,48 +440,52 @@ body {
 }
 
 
-.section-saldo-categorias{
-background-color: #F5F5F5;
-display: flex;
-padding: 20px;
-flex-direction: column;
+.section-saldo-categorias {
+    background-color: #F5F5F5;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
 
 }
 
 
 /*---------------------------*/
-.caixa-categorias{
+.caixa-categorias {
     display: flex;
     flex-direction: column;
     text-align: left;
-    
+
 }
-.caixa-categorias h4{
+
+.caixa-categorias h4 {
     color: #000000;
     font-size: 1.3rem;
-    
+
 }
+
 /*---------------------------*/
 
-.progresso{
+.progresso {
     display: flex;
     justify-content: space-between;
-    
+
 }
+
 /*---------------------------*/
-.legenda-grafico{
+.legenda-grafico {
     display: flex;
     justify-content: space-between;
     text-align: left;
     margin-left: 20px;
     padding-right: 20px;
     margin-top: 0;
-        
+
 }
 
-.legenda-grafico p{
-    
-    text-align: left; /* Força o alinhamento do texto à esquerda caso necessário */
+.legenda-grafico p {
+
+    text-align: left;
+    /* Força o alinhamento do texto à esquerda caso necessário */
     font-weight: lighter;
     color: #767676;
 }
@@ -409,11 +497,14 @@ footer {
     background-color: #3B7FCD;
     color: #fff;
     text-align: center;
-    position: sticky; /* Torna o rodapé pegajoso */
+    position: sticky;
+    /* Torna o rodapé pegajoso */
     bottom: 0;
     left: 0;
-    width: 100%; /* Faz o rodapé ocupar toda a largura da tela */
-    padding: 10px 20px; /* Ajusta o espaçamento interno */
+    width: 100%;
+    /* Faz o rodapé ocupar toda a largura da tela */
+    padding: 10px 20px;
+    /* Ajusta o espaçamento interno */
     margin-top: 50px;
 }
 
@@ -426,12 +517,22 @@ footer {
 
 /*---------------------------------------------------------------*/
 
+/* Estilos Gerais */
+.titulo-pagina {
+    padding: 30px;
+    text-align: center;
+}
+
+/*---------------------------------------------------------------*/
+
 /* Contêiner geral da tabela */
 .receitas-container {
     padding: 20px;
     margin: 0 auto;
-    max-width: 90%; /* Reduz a largura máxima em dispositivos móveis */
+    max-width: 90%;
     box-sizing: border-box;
+    text-align: center;
+    /* Centraliza a tabela na tela */
 }
 
 /* Tabela de receitas */
@@ -439,6 +540,8 @@ footer {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
+    transform-origin: center;
+    /* Define o ponto de escala */
 }
 
 /* Cabeçalho da tabela */
@@ -511,11 +614,13 @@ footer {
 /* Responsividade */
 @media (max-width: 768px) {
     .receitas-container {
-        max-width: 100%; /* Ajusta largura para dispositivos menores */
+        max-width: 100%;
     }
 
     .tabela-receitas {
-        font-size: 14px; /* Reduz tamanho da fonte */
+        font-size: 14px;
+        transform: scale(0.9);
+        /* Reduz o tamanho sem modificar estrutura */
     }
 
     .cabecalho-receitas th {
@@ -525,26 +630,6 @@ footer {
 
     .corpo-receitas td {
         padding: 8px;
-    }
-
-    /* Reorganiza as colunas para mobile */
-    .tabela-receitas {
-        display: block;
-    }
-
-    .corpo-receitas tr {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-    }
-
-    .corpo-receitas td {
-        display: flex;
-        justify-content: space-between;
-        text-align: left;
-        padding: 10px;
-        font-size: 14px;
     }
 
     .botao-lista {
@@ -558,9 +643,13 @@ footer {
 /* Contêiner geral da tabela */
 .despesas-container {
     padding: 20px;
-    margin: 0 auto; /* Centraliza o contêiner horizontalmente */
-    max-width: calc(100% - 300px); /* Garante margem mínima de 150px dos lados */
-    box-sizing: border-box; /* Inclui o padding no cálculo do tamanho total */
+    margin: 0 auto;
+    max-width: calc(100% - 300px);
+    /* Centraliza com margem de 150px dos lados */
+    box-sizing: border-box;
+    /* Inclui padding no cálculo do tamanho total */
+    text-align: center;
+    /* Centraliza a tabela */
 }
 
 /* Tabela de despesas */
@@ -568,78 +657,80 @@ footer {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
+    transform-origin: center;
+    /* Define o ponto de escala */
 }
 
 /* Cabeçalho da tabela */
 .cabecalho-despesas th {
     background-color: transparent;
     color: #000;
-    text-align: left; /* Alinha o cabeçalho à esquerda */
+    text-align: left;
     font-weight: bold;
     padding: 12px;
 }
-.cabecalho-despesas .col-valor{
+
+.cabecalho-despesas .col-valor {
     text-align: right;
 }
+
 .cabecalho-despesas .col-data,
 .cabecalho-despesas .col-categoria {
-    text-align: center; /* Centraliza o texto */
+    text-align: center;
 }
 
 /* Ajustando a largura das colunas */
 .col-descricao {
-    width: 40%; /* A coluna "Descrição" ocupa 40% da tabela */
+    width: 40%;
 }
 
 .col-valor {
-    width: 15%; /* A coluna "Valor" ocupa 15% da tabela */
+    width: 15%;
 }
 
 .col-data {
-    width: 15%; /* A coluna "Data" ocupa 15% da tabela */
+    width: 15%;
 }
 
 .col-categoria {
-    width: 10%; /* A coluna "Categoria" ocupa 30% da tabela */
+    width: 10%;
 }
-
 
 /* Corpo da tabela */
 .corpo-despesas td {
     padding: 12px;
     vertical-align: middle;
-    word-wrap: break-word; /* Quebra o texto longo em várias linhas */
+    word-wrap: break-word;
 }
 
-/* Alinhamento personalizado para as colunas */
 .col-descricao {
-    text-align: left; /* Alinha texto à esquerda */
+    text-align: left;
 }
 
 .col-valor {
-    text-align: right; /* Alinha valores à direita */
+    text-align: right;
 }
 
 .col-data {
-    text-align: center; /* Centraliza as datas */
+    text-align: center;
 }
 
 .col-categoria {
-    text-align: left; /* Alinha texto de categorias à esquerda */
+    text-align: left;
 }
 
 /* Fundo das linhas do corpo da tabela */
 .corpo-despesas tr:nth-child(even) {
-    background-color: #f9f9f9; /* Alterna com fundo cinza claro */
+    background-color: #f9f9f9;
 }
 
 .corpo-despesas tr:nth-child(odd) {
-    background-color: #fdfdfd; /* Fundo branco */
+    background-color: #fdfdfd;
 }
 
 /* Linha de despesa */
 .linha-despesa td {
-    border: none; /* Remove bordas entre células */
+    border: none;
 }
 
 /* Mensagem de "sem despesas" */
@@ -651,16 +742,45 @@ footer {
     padding: 12px;
 }
 
+/*---------------------------------------------------------------*/
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .despesas-container {
+        max-width: 100%;
+    }
+
+    .tabela-despesas {
+        font-size: 14px;
+        transform: scale(0.9);
+        /* Reduz escala sem alterar a estrutura */
+    }
+
+    .cabecalho-despesas th {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .corpo-despesas td {
+        padding: 8px;
+    }
+}
+
 
 /*---------------------------------------------------------------*/
 
 
 /* Contêiner geral da tabela */
+/* Contêiner geral da tabela */
 .reservas-container {
     padding: 20px;
-    margin: 0 auto; /* Centraliza o contêiner horizontalmente */
-    max-width: calc(100% - 300px); /* Garante margem mínima de 150px dos lados */
-    box-sizing: border-box; /* Inclui o padding no cálculo do tamanho total */
+    margin: 0 auto;
+    max-width: calc(100% - 300px);
+    /* Margem mínima de 150px dos lados */
+    box-sizing: border-box;
+    /* Inclui o padding no cálculo total */
+    text-align: center;
+    /* Centraliza a tabela */
 }
 
 /* Tabela de reservas */
@@ -668,13 +788,15 @@ footer {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
+    transform-origin: center;
+    /* Define o ponto de escala */
 }
 
 /* Cabeçalho da tabela */
 .cabecalho-reservas th {
     background-color: transparent;
     color: #000;
-    text-align: left; /* Alinha o cabeçalho à esquerda */
+    text-align: left;
     font-weight: bold;
     padding: 12px;
 }
@@ -684,58 +806,57 @@ footer {
 }
 
 .cabecalho-reservas .col-acoes {
-    text-align: center; /* Centraliza as ações */
+    text-align: center;
 }
 
 .cabecalho-reservas .col-categoria {
-    text-align: left; /* Alinha a categoria à esquerda */
+    text-align: left;
 }
 
 /* Ajustando a largura das colunas */
 .col-categoria {
-    width: 40%; /* A coluna "Categoria" ocupa 40% da tabela */
+    width: 40%;
 }
 
 .col-valor {
-    width: 30%; /* A coluna "Valor Reservado" ocupa 30% da tabela */
+    width: 30%;
 }
 
 .col-acoes {
-    width: 10%; /* A coluna "Ações" ocupa 30% da tabela */
+    width: 10%;
 }
 
 /* Corpo da tabela */
 .corpo-reservas td {
     padding: 12px;
     vertical-align: middle;
-    word-wrap: break-word; /* Quebra o texto longo em várias linhas */
+    word-wrap: break-word;
 }
 
-/* Alinhamento personalizado para as colunas */
 .col-categoria {
-    text-align: left; /* Alinha o texto da categoria à esquerda */
+    text-align: left;
 }
 
 .col-valor {
-    text-align: right; /* Alinha valores à direita */
+    text-align: right;
 }
 
 .col-acoes {
-    text-align: center; /* Centraliza as ações */
+    text-align: center;
 }
 
 /* Fundo das linhas do corpo da tabela */
 .corpo-reservas tr:nth-child(even) {
-    background-color: #f9f9f9; /* Alterna com fundo cinza claro */
+    background-color: #f9f9f9;
 }
 
 .corpo-reservas tr:nth-child(odd) {
-    background-color: #fdfdfd; /* Fundo branco */
+    background-color: #fdfdfd;
 }
 
 /* Linha de reserva */
 .linha-reserva td {
-    border: none; /* Remove bordas entre células */
+    border: none;
 }
 
 /* Mensagem de "sem reservas" */
@@ -747,44 +868,72 @@ footer {
     padding: 12px;
 }
 
+/* Botão de editar */
 .btn-editar {
-    background-color: #256ab9; /* Cor de fundo azul */
-    color: white; /* Cor do texto */
-    padding: 3px 16px; /* Espaçamento interno */
-    font-size: 14px; /* Tamanho da fonte */
-    border: none; /* Remove borda padrão */
-    border-radius: 5px; /* Bordas arredondadas */
-    text-align: center; /* Centraliza o texto */
-    text-decoration: none; /* Remove sublinhado de links */
-    cursor: pointer; /* Aponta para o botão */
-    transition: background-color 0.3s ease; /* Transição suave para o efeito de hover */
+    background-color: #256ab9;
+    color: white;
+    padding: 3px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Efeito de hover para o botão de editar */
 .btn-editar:hover {
-    background-color: #0056b3; /* Cor de fundo mais escura ao passar o mouse */
+    background-color: #0056b3;
 }
 
-/* Efeito de foco (quando o botão é clicado) */
 .btn-editar:focus {
-    outline: none; /* Remove o contorno padrão ao focar */
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Adiciona sombra suave ao focar */
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
 }
 
-/* Estilo para o botão desabilitado (quando não estiver disponível) */
 .btn-editar.disabled {
-    background-color: #cccccc; /* Cor de fundo cinza */
-    color: #888888; /* Cor do texto cinza escuro */
-    cursor: not-allowed; /* Cursor indicando que não é clicável */
+    background-color: #cccccc;
+    color: #888888;
+    cursor: not-allowed;
 }
 
+/* ---------------------------------------------------- */
 
+/* Responsividade */
+@media (max-width: 768px) {
+    .reservas-container {
+        max-width: 100%;
+    }
+
+    .tabela-reservas {
+        font-size: 14px;
+        transform: scale(0.9);
+        /* Reduz escala para dispositivos menores */
+    }
+
+    .cabecalho-reservas th {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .corpo-reservas td {
+        padding: 8px;
+    }
+
+    .btn-editar {
+        font-size: 12px;
+        padding: 2px 12px;
+    }
+}
+
+/* ---------------------------------------------------- */
 
 /* Estilo para o formulário */
 .form {
     width: 100%;
     max-width: 500px;
-    margin: 0 auto; /* Centraliza o formulário na tela */
+    margin: 0 auto;
+    /* Centraliza o formulário na tela */
     padding: 20px;
     border-radius: 8px;
     background-color: #fff;
@@ -806,7 +955,7 @@ footer {
 }
 
 /* Estilo para os campos de entrada (input, select, textarea) */
-.form-group input, 
+.form-group input,
 .form-group select {
     width: 100%;
     padding: 12px;
@@ -841,9 +990,11 @@ footer {
 .botoes-form .btn-acao:active {
     background-color: #003f7f;
 }
-.btn-acao + .btn-cancelar {
+
+.btn-acao+.btn-cancelar {
     margin-left: 10px;
 }
+
 .btn-cancelar {
     padding: 10px 20px;
     background-color: #6c757d;
@@ -856,42 +1007,56 @@ footer {
 }
 
 .btn-cancelar:hover {
-    background-color: #5a6268; /* Tom de cinza mais escuro ao passar o mouse */
+    background-color: #5a6268;
+    /* Tom de cinza mais escuro ao passar o mouse */
 }
 
 .btn-cancelar:active {
-    background-color: #343a40; /* Tom ainda mais escuro para clique */
+    background-color: #343a40;
+    /* Tom ainda mais escuro para clique */
 }
+
 /*---------------------------------------------------------------*/
 
-.caixa-resumo{
+.caixa-resumo {
     display: flex;
-    justify-content: flex-end; /* Alinha ao lado esquerdo */
-    align-items: flex-start; /* Alinha no topo */
-    min-height: 100vh; /* Garante que o contêiner ocupe a altura total da tela */
-    padding: 20px; /* Espaçamento interno para evitar o contato com a borda */
-
-}
-.section-reservas-categorias {
-    flex: 0 0 auto; /* Evita que a seção redimensione automaticamente */
-    width: 500px; /* Largura fixa para a seção */
-    background-color: #f9f9f9; /* Cor de fundo para destaque */
-    border: 1px solid #ddd; /* Borda para separar visualmente */
+    justify-content: flex-end;
+    /* Alinha ao lado esquerdo */
+    align-items: flex-start;
+    /* Alinha no topo */
+    min-height: 100vh;
+    /* Garante que o contêiner ocupe a altura total da tela */
     padding: 20px;
-    border-radius: 8px; /* Bordas arredondadas */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    /* Espaçamento interno para evitar o contato com a borda */
+
 }
 
-.section-reservas-categorias p{
+.section-reservas-categorias {
+    flex: 0 0 auto;
+    /* Evita que a seção redimensione automaticamente */
+    width: 500px;
+    /* Largura fixa para a seção */
+    background-color: #f9f9f9;
+    /* Cor de fundo para destaque */
+    border: 1px solid #ddd;
+    /* Borda para separar visualmente */
+    padding: 20px;
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+}
+
+.section-reservas-categorias p {
     font-size: .8rem;
 }
 
-.contorno-grafico{
+.contorno-grafico {
     background-color: #F5F5F5;
     margin-top: 50px;
 }
 
-.grafico-categoria h3{
+.grafico-categoria h3 {
     margin-left: 15px;
     margin-top: 10px;
 }
